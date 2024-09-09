@@ -1,1 +1,56 @@
+-------------- ej 1 --------------
 
+fib:: Integer -> Integer
+fib n | n == 0 = 0
+      | n == 1 = 1
+      | otherwise = fib(n-1) + fib(n-2)
+
+fib2:: Integer -> Integer
+fib2 0 = 0
+fib2 1 = 1
+fub2 n = fib(n-1) + fib(n-2)
+
+-------------- ej 2 --------------
+{-
+problema parteEntera (x: R) : Z {
+requiere: { x ≥ 0 }
+asegura: { resultado ≤ x < resultado + 1 }
+}
+-}
+
+parteEntera :: Float -> Integer
+parteEntera n | n>=0 && n<=1 = 0
+parteEntera n = 1 + parteEntera (n-1) 
+
+-------------- ej 3 --------------
+{-
+Especificar e implementar la funci´on esDivisible :: Integer ->Integer ->Bool que dados dos n´umeros
+naturales determinar si el primero es divisible por el segundo. No est´a permitido utilizar las funciones mod ni div
+-}
+
+esDivisible :: Integer ->Integer ->Bool 
+esDivisible a b | (a-b) == 0 = True
+                | (a-b) < 0 = False 
+                | otherwise = esDivisible(a-b) b
+
+-------------- ej 7 --------------
+{-
+problema iesimoDigito (n: Z, i: Z) : Z {
+requiere: { n ≥ 0 ∧ 1 ≤ i ≤ cantDigitos(n) }
+asegura: { resultado = (n div 10cantDigitos(n)−i) mod 10 }
+}
+
+problema cantDigitos (n: Z) : N {
+requiere: { n ≥ 0 }
+asegura: { n = 0 → resultado = 1}
+asegura: { n̸ = 0 → (n div 10resultado−1 > 0 ∧ n div 10resultado = 0) }
+}
+-}
+
+iesimoDigito :: Integer -> Integer -> Integer
+iesimoDigito n i | cantDigitos n == i = mod n 10
+                 | otherwise = iesimoDigito (div n 10)
+            where 
+                cantDigitos :: Integer -> Integer
+                cantDigitos n | n < 10 = 1
+                              | otherwise = cantDigitos(div n 10) +1 
