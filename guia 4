@@ -33,6 +33,15 @@ esDivisible a b | (a-b) == 0 = True
                 | (a-b) < 0 = False 
                 | otherwise = esDivisible(a-b) b
 
+-------------- ej 6 --------------
+
+ultimoDigito :: Integer -> Integer
+ultimoDigito n = mod n 10
+
+todosDigitosIguales :: Integer -> Bool
+todosDigitosIguales n | n<10 = True
+                      | otherwise = ultimoDigito n == ultimoDigito (div n 10) && todosDigitosIguales (div n 10) 
+
 -------------- ej 7 --------------
 {-
 problema iesimoDigito (n: Z, i: Z) : Z {
@@ -46,11 +55,20 @@ asegura: { n = 0 → resultado = 1}
 asegura: { n̸ = 0 → (n div 10resultado−1 > 0 ∧ n div 10resultado = 0) }
 }
 -}
+cantDigitos :: Integer -> Integer
+cantDigitos n | n < 10 = 1
+              | otherwise = cantDigitos(div n 10) +1 
 
 iesimoDigito :: Integer -> Integer -> Integer
 iesimoDigito n i | cantDigitos n == i = mod n 10
-                 | otherwise = iesimoDigito (div n 10)
-            where 
-                cantDigitos :: Integer -> Integer
-                cantDigitos n | n < 10 = 1
-                              | otherwise = cantDigitos(div n 10) +1 
+                 | otherwise = iesimoDigito (div n 10) i
+
+-------------- ej teo --------------
+
+sumatoriaInterna :: Integer -> Integer -> Integer
+sumatoriaInterna _ 0 = 0
+sumatoriaInterna n j = n^j + sumatoriaInterna n (j-1)
+
+sumatoriaDoble :: Integer -> Integer -> Integer
+sumatoriaDoble 0 _ = 0
+sumatoriaDoble n m = sumatoriaDoble (n-1) m + sumatoriaInterna n m
