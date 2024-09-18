@@ -4,7 +4,7 @@ longitud :: [Int] -> Int -- no anda cuando pongo [t] -> Integer
 longitud l | l == [] = 0
            | otherwise = 1 + longitud (tail l)
 
-longitudPM :: [Int] -> Int
+longitudPM :: [t] -> Integer
 longitudPM [] = 0
 longitudPM (_:xs) = 1 + longitud xs
 
@@ -23,16 +23,33 @@ ultimo (x:xs) = ultimo xs
 {-
 problema principio (s: seq⟨T⟩) : seq⟨T⟩ {
 requiere: { |s| > 0 }
-asegura: { resultado = subseq(s, 0, |s| − 1) }
+asegura: { resultado = subseq(s, 0, |s| − 1) } 
 }
+subseq(s, 0, |s| − 1) s = refiere a la lista, 0 = desde donde empieza, |s| − 1 = donde termina (longitud total -1)
 -}
+principio :: [t] -> [t]
+principio [x] = []
+principio (x:xs) = x : principio xs
 
 -- 1.4
 {-
-problema reverso (s: seq⟨T⟩) : seq⟨T⟩ {
+problema reverso (s: seq⟨T ⟩) : seq⟨T ⟩ {
 requiere: { T rue }
 asegura: { resultado tiene los mismos elementos que s pero en orden inverso.}
 }
 -}
+
 reverso :: [t] -> [t]
 reverso [x] = [x]
+reverso xs = ultimo xs : reverso (principio xs)
+
+-------------- ej 2 --------------
+-- 2.1
+{-
+problema pertenece (e: T , s: seq⟨T ⟩) : B {
+requiere: { T rue }
+asegura: { resultado = true ↔ e ∈ s }
+}
+-}
+
+pertenece :: (Eq t) => t -> [t] -> Bool
