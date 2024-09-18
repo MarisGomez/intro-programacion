@@ -1,1 +1,38 @@
+-------------- ej 1 --------------
+-- 1.1
+longitud :: [Int] -> Int -- no anda cuando pongo [t] -> Integer 
+longitud l | l == [] = 0
+           | otherwise = 1 + longitud (tail l)
 
+longitudPM :: [Int] -> Int
+longitudPM [] = 0
+longitudPM (_:xs) = 1 + longitud xs
+
+-- 1.2
+{-
+problema ultimo (s: seq⟨T⟩) : T {
+requiere: { |s| > 0 }
+asegura: { resultado = s[|s| − 1] }
+}
+-}
+ultimo :: [t] -> t
+ultimo [x] = x
+ultimo (x:xs) = ultimo xs
+
+-- 1.3
+{-
+problema principio (s: seq⟨T⟩) : seq⟨T⟩ {
+requiere: { |s| > 0 }
+asegura: { resultado = subseq(s, 0, |s| − 1) }
+}
+-}
+
+-- 1.4
+{-
+problema reverso (s: seq⟨T⟩) : seq⟨T⟩ {
+requiere: { T rue }
+asegura: { resultado tiene los mismos elementos que s pero en orden inverso.}
+}
+-}
+reverso :: [t] -> [t]
+reverso [x] = [x]
