@@ -53,3 +53,119 @@ asegura: { resultado = true ↔ e ∈ s }
 -}
 
 pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece e l | l == [] = False
+              | otherwise = head l == e || pertenece e (tail l)
+
+pertenecePM :: (Eq t) => t -> [t] -> Bool
+pertenecePM _ [] = False
+pertenecePM e (x:xs) = e == x || pertenece e xs
+
+-- 2.2
+todosIguales :: (Eq t) => [t] -> Bool
+todosIguales [] = True
+todosIguales [x] = True
+todosIguales (x:xs) = x == head xs && todosIguales xs -- compara los elementos de izq a der
+-- todosIguales (x:xs) = x == ultimo xs && todosIguales xs -- compara el primer elemento con el segundo recursivamente
+
+-- 2.3
+todosDistintos :: (Eq t) => [t] -> Bool
+todosDistintos (x:xs) | (tail xs) == [] = True
+                      | pertenece x xs = False
+                      | otherwise = todosDistintos xs
+
+-- 2.4
+hayRepetidos :: (Eq t) => [t] -> Bool
+hayRepetidos (x:xs) | (tail xs) == [] = False
+                    | pertenece x xs = True
+                    | otherwise = hayRepetidos xs
+
+-- 2.5
+quitar :: (Eq t) => t -> [t] -> [t]
+quitar _ [] = []
+quitar e (x:xs) | e == x = xs
+                | otherwise = x : quitar e xs
+
+-- 2.6
+quitarTodos :: (Eq t ) => t -> [t] -> [t]
+quitarTodos _ [] = []
+quitarTodos e (x:xs) | e == x = quitarTodos e xs
+                     | otherwise = x : quitarTodos e xs
+
+-- 2.7
+eliminarRepetidos :: (Eq t) => [t] -> [t]
+eliminarRepetidos (x:xs) | xs == [] = [] 
+                         | x == head xs = x : quitarTodos x (eliminarRepetidos xs)
+                         | otherwise = x : eliminarRepetidos xs
+
+-- 2.8
+mismosElementos :: (Eq t) => [t] -> [t] -> Bool
+mismosElementos [x] [y] = x == y
+mismosElementos (x:xs) (y:ys) | pertenece x (y:ys) && pertenece y (x:xs)  = mismosElementos xs ys
+                              | otherwise = False
+
+-- 2.9
+capicua :: (Eq t) => [t] -> Bool
+capicua [x] = True
+capicua (x:xs) = x == ultimo xs && capicua (principio xs) -- consultar ej [1,2,3,3,2,1]
+
+-------------- ej 3 -------------- (Listas de enteros)
+-- 3.1
+sumatoria :: [Integer] -> Integer
+sumatoria [] = 0
+sumatoria (x:xs) = x + sumatoria xs
+
+-- 3.2
+productoria :: [Integer] -> Integer
+productoria [] = 0
+productoria (x:xs) = x * productoria xs
+
+-- 3.3
+maximo :: [Integer] -> Integer 
+maximo [x] = x
+maximo (x:y:xs) | x > y = maximo (x:xs)
+                | otherwise = maximo (y:xs)
+
+-- 3.4
+sumarN :: Integer -> [Integer] -> [Integer]
+sumarN 0 (x:xs) = (x:xs)
+sumarN n [x] = [x+n]
+sumarN n (x:xs) = (x+n) : sumarN n xs
+
+-- 3.5
+sumarElPrimero :: [Integer] -> [Integer]
+sumarElPrimero (x:xs) = sumarN x (x:xs)
+
+-- 3.6
+sumarElUltimo :: [Integer] -> [Integer]
+sumarElUltimo (x:xs) = sumarN (ultimo (x:xs)) (x:xs)
+
+-- 3.7
+pares :: [Integer] -> [Integer]
+pares [] = []
+pares (x:xs) | mod x 2 == 0 = x : pares xs
+             | otherwise = pares xs
+
+-- 3.8
+multiplosDeN :: Integer -> [Integer] -> [Integer]
+multiplosDeN n [] = [] 
+multiplosDeN n (x:xs) | mod n x == 0 = x : multiplosDeN n xs
+                      | otherwise = multiplosDeN n xs
+
+-- 3.9
+ordenar :: [Integer] -> [Integer]
+ordenar [] = []
+ordenar x = ordenar (quitar (maximo x) x) ++ [maximo x]
+
+-------------- ej 4 -------------- 
+-- 4.1
+sacarBlancosRepetidos :: [Char] -> [Char] -- no devuelve una lista ¿?
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] = [x]
+sacarBlancosRepetidos (x:y:xs) | x == y && x == ' ' = sacarBlancosRepetidos (y:xs)
+                               | otherwise = x : sacarBlancosRepetidos (y:xs)
+
+-- 4.2
+contarPalabras :: [Char] -> Integer
+contarPalabras [] = 0
+contarPalabras [x] = 1
+contarPalabras (x:xs) = 
