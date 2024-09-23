@@ -31,5 +31,7 @@ pares (x:xs) | mod x 2 == 0 && not (pertenecePM x (pares xs)) = x : pares xs
 -- test
 runPares = runTestTT testPares
 
+--------------------------------
+
 
 
