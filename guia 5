@@ -58,7 +58,7 @@ pertenece e l | l == [] = False
 
 pertenecePM :: (Eq t) => t -> [t] -> Bool
 pertenecePM _ [] = False
-pertenecePM e (x:xs) = e == x || pertenece e xs
+pertenecePM e (x:xs) = e == x || pertenecePM e xs
 
 -- 2.2
 todosIguales :: (Eq t) => [t] -> Bool
