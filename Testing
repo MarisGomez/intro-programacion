@@ -32,6 +32,19 @@ pares (x:xs) | mod x 2 == 0 && not (pertenecePM x (pares xs)) = x : pares xs
 runPares = runTestTT testPares
 
 --------------------------------
+pares :: [Integer] -> [Integer]
+pares [] = []
+pares (x:xs) | mod x 2 == 0 && not (pertenecePM x (pares xs)) = x : pares xs
+             | otherwise = pares xs
 
+
+generarStock :: [String] -> [(String, Int)]
+generarStock [p] = [(p, 1)]
+generarStock (p:ps) = (p, registrarStock p (p:ps)) : generarStock ps
+
+registrarStock :: String -> [String] -> Int
+registrarStock _ [] = 0
+registrarStock p (x:xs) | p == x = 1 + registrarStock p xs
+                        | otherwise = 0 + registrarStock p xs
 
 
