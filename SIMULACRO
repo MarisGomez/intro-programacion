@@ -30,3 +30,11 @@ personasAux ((usuario1, usuario2):xs) | relacionesValidas ((usuario1, usuario2):
 personas :: [(String, String)] -> [String]
 personas [] = ["nadie"]
 personas xs = eliminarRepetidos (personasAux xs)
+
+-- ej 3
+
+amigosDe :: String -> [(String, String)] -> [String]
+amigosDe "nadie" [] = ["nadie"] -- esta mal. lo tenes que corregir
+
+personaConMasAmigos :: [(String, String)] -> String
+personaConMasAmigos [] = "yo" -- esta mal. lo tenes que corregir
