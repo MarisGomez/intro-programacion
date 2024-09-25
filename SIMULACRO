@@ -1,0 +1,32 @@
+module SolucionT2 where
+-- ej 1
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece _ [] = False
+pertenece e (x:xs) | e == x = True
+                   | otherwise = pertenece e xs
+
+relacionesValidas :: [(String, String)] -> Bool
+relacionesValidas [] = True
+relacionesValidas ((usuario1, usuario2):xs) | usuario1 == usuario2 = False
+                                            | pertenece (usuario1, usuario2) xs || pertenece (usuario2, usuario1) xs = False
+                                            | otherwise = relacionesValidas xs
+-- ej 2
+quitarTodos :: String -> [String] -> [String]
+quitarTodos _ [] = []
+quitarTodos e (x:xs) | e == x && not (pertenece e xs) = xs
+                     | e == x && pertenece e xs = quitarTodos e xs
+                     | otherwise = x : quitarTodos e xs
+
+eliminarRepetidos :: [String] -> [String]
+eliminarRepetidos [x] = [x]
+eliminarRepetidos (x:xs) | pertenece x xs = x : quitarTodos x (eliminarRepetidos xs)
+                         | otherwise = x : eliminarRepetidos xs
+
+
+personasAux :: [(String, String)] -> [String]
+personasAux [] = []
+personasAux ((usuario1, usuario2):xs) | relacionesValidas ((usuario1, usuario2):xs) == True = usuario1 : usuario2 : personasAux xs
+
+personas :: [(String, String)] -> [String]
+personas [] = ["nadie"]
+personas xs = eliminarRepetidos (personasAux xs)
