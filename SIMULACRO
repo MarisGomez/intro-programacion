@@ -28,16 +28,76 @@ personasAux [] = []
 personasAux ((usuario1, usuario2):xs) | relacionesValidas ((usuario1, usuario2):xs) == True = usuario1 : usuario2 : personasAux xs
 
 personas :: [(String, String)] -> [String]
-personas [] = ["nadie"]
+personas [] = []
 personas xs = eliminarRepetidos (personasAux xs)
 
 -- ej 3
+perteneceDupla :: String -> (String, String) -> Bool
+perteneceDupla e (a,b) | e == a || e == b = True
+                       | otherwise = False
+
+amigosDeAux :: String -> [(String, String)] -> [(String, String)]
+amigosDeAux usuario [] = []
+amigosDeAux usuario [x] | perteneceDupla usuario x = [x]
+amigosDeAux usuario (x:xs) | perteneceDupla usuario x = x : amigosDeAux usuario xs
+                           | otherwise = amigosDeAux usuario xs
 
 amigosDe :: String -> [(String, String)] -> [String]
-amigosDe "nadie" [] = ["nadie"] -- esta mal. lo tenes que corregir
+amigosDe _ [] = []
+amigosDe usuario xs = quitarTodos usuario (personas (amigosDeAux usuario xs))
+
+-- ej 4
+masRepetido :: [String] -> String 
+masRepetido [x] = x
+masRepetido (x:y:xs) | cantidadDeApariciones x xs > cantidadDeApariciones y xs = masRepetido (x:xs)
+                     | cantidadDeApariciones y xs > cantidadDeApariciones x xs = masRepetido (y:xs)
+                     | otherwise = masRepetido (x:xs)
+
+cantidadDeApariciones :: String -> [String] -> Int
+cantidadDeApariciones _ [] = 0
+cantidadDeApariciones e (x:xs) | e == x = 1 + cantidadDeApariciones e xs
+                               | otherwise = 0 + cantidadDeApariciones e xs
 
 personaConMasAmigos :: [(String, String)] -> String
-personaConMasAmigos [] = "yo" -- esta mal. lo tenes que corregir
-
-OvfdTYDp
+personaConMasAmigos [] = "yo"
+personaConMasAmigos xs = masRepetido (personasAux xs)
 ------------------------------------------------------------------------------------------------ TEST
+main = runTestTT tests
+
+tests = test [
+	-- "nombre" ~: (funcion parametros) ~?= resultado_esperado
+	"componentes repetidas" ~: (relacionesValidas [("ana", "ana")]) ~?= False,
+	"tupla repetida" ~: (relacionesValidas [("ana", "pedro"), ("ana", "pedro")]) ~?= False,
+	"tupla repetida invertida" ~: (relacionesValidas [("ana", "pedro"), ("pedro", "ana")]) ~?= False,
+	"todas diferentes" ~: (relacionesValidas [("ana", "pedro"), ("ana", "carlos")]) ~?= True
+	]
+
+-- -- Ejemplos
+
+-- usuario1 = "Juan"
+-- usuario2 = "Natalia"
+-- usuario3 = "Pedro"
+
+-- relacion1_2 = (usuario1, usuario2)
+-- relacion1_1 = (usuario1, usuario1)
+-- relacion1_3 = (usuario1, usuario3)
+
+
+-- -- FUNCIONES PARA TESTING, NO BORRAR
+-- -- expectAny permite saber si el elemenot que devuelve la función es alguno de los esperados
+-- expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
+
+
+-- -- sonIguales permite ver que dos listas sean iguales si no importa el orden
+-- quitar :: (Eq t) => t -> [t] -> [t]
+-- -- requiere x pertenece a y
+-- quitar x (y:ys)
+-- | x == y = ys
+-- | otherwise = y : quitar x ys
+
+-- incluido :: (Eq t) => [t] -> [t] -> Bool
+-- incluido [] l = True
+-- incluido (x:c) l = elem x l && incluido c (quitar x l)
+
+-- sonIguales :: (Eq t) => [t] -> [t] -> Bool
+-- sonIguales xs ys = incluido xs ys && incluido ys xs
