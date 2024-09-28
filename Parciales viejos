@@ -1,0 +1,48 @@
+-- EJ 1
+votosEnBlanco :: [(String, String)] -> [Int] -> Int -> Int
+votosEnBlanco xs v vTotales = vTotales - sumaVotos v
+
+sumaVotos :: [Int] -> Int
+sumaVotos [] = 0
+sumaVotos (x:xs) = x + sumaVotos xs
+
+-- EJ 2
+perteneceADupla :: String -> [(String, String)] -> Bool
+perteneceADupla _ [] = False
+perteneceADupla e ((x,y):xs) | e == x || e == y = True
+                             | otherwise = perteneceADupla e xs
+
+formulasValidas :: [(String,String)] -> Bool
+formulasValidas [] = True
+formulasValidas ((presi,vice):xs) | presi == vice = False
+                                  | perteneceADupla presi xs || perteneceADupla vice xs = False
+                                  | otherwise = formulasValidas xs
+
+-- EJ 3
+porcentajeDeVotos :: String -> [(String,String)] -> [Int] -> Float
+porcentajeDeVotos presi formulas votos = division (cantVotosPorPresi presi formulas votos * 100) (sumaVotos votos) 
+
+cantVotosPorPresi :: String -> [(String,String)] -> [Int] -> Int
+cantVotosPorPresi presi ((p,v):xs) (votos:ys) | presi == p = votos
+                                              | otherwise = cantVotosPorPresi presi xs ys
+
+division :: Int -> Int -> Float
+division a b = (fromIntegral a)/(fromIntegral b)
+
+-- EJ 4
+proximoPresidente :: [(String,String)] -> [Int] -> String
+proximoPresidente formulas votos = fst (nElem (iesimoLugar (maximo votos) votos) formulas)
+
+maximo :: [Int] -> Int
+maximo [x] = x
+maximo (x:y:xs) | x > y = maximo (x:xs)
+                | otherwise = maximo (y:xs)
+
+iesimoLugar :: (Eq t) => t -> [t] -> Int
+iesimoLugar _ [] = 0
+iesimoLugar i (x:xs) | i == x = 1
+                     | otherwise = 1 + iesimoLugar i xs
+
+nElem :: Int -> [t] -> t
+nElem n (x:xs) | n == 1 = x
+               | n /= 1 = nElem (n-1) xs 
