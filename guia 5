@@ -86,15 +86,16 @@ quitar e (x:xs) | e == x = xs
                 | otherwise = x : quitar e xs
 
 -- 2.6
-quitarTodos :: (Eq t ) => t -> [t] -> [t]
+quitarTodos :: (Eq t) => t -> [t] -> [t]
 quitarTodos _ [] = []
-quitarTodos e (x:xs) | e == x = quitarTodos e xs
+quitarTodos e (x:xs) | e == x && not (pertenece e xs) = xs
+                     | e == x && pertenece e xs = quitarTodos e xs
                      | otherwise = x : quitarTodos e xs
 
 -- 2.7
 eliminarRepetidos :: (Eq t) => [t] -> [t]
-eliminarRepetidos (x:xs) | xs == [] = [] 
-                         | x == head xs = x : quitarTodos x (eliminarRepetidos xs)
+eliminarRepetidos [x] = [x]
+eliminarRepetidos (x:xs) | pertenece x xs = x : quitarTodos x (eliminarRepetidos xs)
                          | otherwise = x : eliminarRepetidos xs
 
 -- 2.8
