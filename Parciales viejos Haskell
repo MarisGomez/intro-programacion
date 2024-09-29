@@ -1,3 +1,4 @@
+--------------------------------------------------------------------------------------- TEMA 1
 -- EJ 1
 votosEnBlanco :: [(String, String)] -> [Int] -> Int -> Int
 votosEnBlanco xs v vTotales = vTotales - sumaVotos v
@@ -46,3 +47,59 @@ iesimoLugar i (x:xs) | i == x = 1
 nElem :: Int -> [t] -> t
 nElem n (x:xs) | n == 1 = x
                | n /= 1 = nElem (n-1) xs 
+
+--------------------------------------------------------------------------------------- TEMA 2
+-- EJ 1
+atajaronSuplentes :: [(String, String)] -> [Int] -> Int -> Int
+atajaronSuplentes equipos goles totalGoles = totalGoles - sumatoria goles
+
+-- auxiliar ej 1
+sumatoria :: [Int] -> Int
+sumatoria [] = 0
+sumatoria (x:xs) = x + sumatoria xs
+
+-- EJ 2
+equiposValidos :: [(String, String)] -> Bool
+equiposValidos [] = True
+equiposValidos ((equipo, arquero):xs) | equipo == arquero = False
+                                      | perteneceADupla equipo xs || perteneceADupla arquero xs = False
+                                      | otherwise =  equiposValidos xs
+
+-- auxiliar ej 2
+perteneceADupla :: String -> [(String, String)] -> Bool
+perteneceADupla _ [] = False
+perteneceADupla x ((a,b):xs) | x == a || x == b = True
+                             | otherwise = perteneceADupla x xs
+
+-- EJ 3
+porcentajeDeGoles :: String -> [(String, String)] -> [Int] -> Float
+porcentajeDeGoles _ _ [] = 0
+porcentajeDeGoles nombre equipos goles = division (cantGolesPorArquero nombre equipos goles * 100) (sumatoria goles)
+
+-- auxiliar ej 3
+cantGolesPorArquero :: String -> [(String, String)] -> [Int] -> Int
+cantGolesPorArquero nombre ((equipo,arquero):xs) (goles:gs) | nombre == arquero = goles
+                                                            | otherwise = cantGolesPorArquero nombre xs gs
+
+division :: Int -> Int -> Float
+division a b = fromIntegral a / fromIntegral b
+
+-- EJ 4
+vallaMenosVencida :: [(String, String)] -> [Int] -> String
+vallaMenosVencida equipos goles = snd (nElem (iesimoLugar (minimo goles) goles) equipos)
+
+-- auxiliar ej 4
+minimo :: [Int] -> Int
+minimo [x] = x
+minimo (x:y:xs) | x < y = minimo (x:xs)
+                | otherwise = minimo (y:xs)
+
+iesimoLugar :: (Eq t) => t -> [t] -> Int
+iesimoLugar _ [] = 0
+iesimoLugar i (x:xs) | i == x = 1
+                     | otherwise = 1 + iesimoLugar i xs
+
+nElem :: Int -> [t] -> t
+nElem n [x] = x
+nElem n (x:xs) | n == 1 = x
+               | otherwise = nElem (n-1) xs
