@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------------- TEMA 1
+--------------------------------------------------------------------------------------- 2023 TEMA 1
 -- EJ 1
 votosEnBlanco :: [(String, String)] -> [Int] -> Int -> Int
 votosEnBlanco xs v vTotales = vTotales - sumaVotos v
@@ -52,7 +52,7 @@ nElem :: Int -> [t] -> t
 nElem n (x:xs) | n == 1 = x
                | n /= 1 = nElem (n-1) xs 
 
---------------------------------------------------------------------------------------- TEMA 2
+--------------------------------------------------------------------------------------- 2023 TEMA 2
 -- EJ 1
 atajaronSuplentes :: [(String, String)] -> [Int] -> Int -> Int
 atajaronSuplentes equipos goles totalGoles = totalGoles - sumatoria goles
@@ -107,3 +107,70 @@ nElem :: Int -> [t] -> t
 nElem n [x] = x
 nElem n (x:xs) | n == 1 = x
                | otherwise = nElem (n-1) xs
+
+--------------------------------------------------------------------------------------- 2024 TEMA 1
+-- EJ 1
+aproboMasDeNMaterias :: [(String, [Int])] -> String -> Int -> Bool
+aproboMasDeNMaterias [] _ _ = False
+aproboMasDeNMaterias ((alumno, notas):xs) nombre n | nombre == alumno && notasAprobadas notas >= n = True
+                                                   | nombre == alumno && notasAprobadas notas < n = False
+                                                   | otherwise = aproboMasDeNMaterias xs nombre n
+
+-- auxiliar ej 1
+notasAprobadas :: [Int] -> Int
+notasAprobadas [] = 0
+notasAprobadas (x:xs) | x >= 4 = 1 + notasAprobadas xs
+                      | otherwise = notasAprobadas xs
+
+-- [("juan", [1,4,6,2]),("juana",[10,8,4,7]),("keiner",[2,6,8,4])]
+
+-- EJ 2
+buenosAlumnos :: [(String, [Int])] -> [String]
+buenosAlumnos [] = []
+buenosAlumnos ((alumno, notas):xs) | buenAlumno (alumno, notas) = alumno : buenosAlumnos xs
+                                   | otherwise = buenosAlumnos xs
+
+-- auxiliar ej 2
+buenAlumno :: (String, [Int]) -> Bool
+buenAlumno (alumno, notas) | longitud notas == notasAprobadas notas && promedioNotas notas >= 8 = True
+                           | otherwise = False
+
+promedioNotas :: [Int] -> Float
+promedioNotas [] = 0
+promedioNotas notas = division (sumatoria notas) (longitud notas)
+
+longitud :: [Int] -> Int
+longitud [] = 0
+longitud (x:xs) = 1 + longitud xs
+
+sumatoria :: [Int] -> Int
+sumatoria [] = 0
+sumatoria (x:xs) = x + sumatoria xs
+
+division :: Int -> Int -> Float
+division a b = (fromIntegral a)/(fromIntegral b)
+
+-- EJ 3
+mejorPromedio:: [(String, [Int])] -> String
+mejorPromedio [(alumno, notas)] = alumno
+mejorPromedio ((alumno, notas):(alumno1, notas1):xs) | promedioNotas notas >= promedioNotas notas1 = mejorPromedio ((alumno, notas):xs)
+                                                     | otherwise = mejorPromedio ((alumno1, notas1):xs)
+
+-- EJ 4
+seGraduoConHonores :: [(String, [Int])] -> Int -> String -> Bool
+seGraduoConHonores [] materias nombre = False
+seGraduoConHonores ((alumno, notas):xs) materias nombre 
+    | nombre == alumno && aproboMasDeNMaterias ((alumno, notas):xs) nombre (materias-1) && pertenece nombre (buenosAlumnos ((alumno, notas):xs)) && promedioDelMejorPromedio ((alumno, notas):xs) - promedioNotas notas < 1  = True
+    | otherwise = seGraduoConHonores xs materias nombre
+
+
+-- auxiliar ej 4
+pertenece :: String -> [String] -> Bool
+pertenece _ [] = False
+pertenece n (x:xs) | n == x = True
+                   | otherwise = pertenece n xs
+
+promedioDelMejorPromedio :: [(String, [Int])] -> Float
+promedioDelMejorPromedio ((alumno, notas):xs) | alumno == mejorPromedio ((alumno, notas):xs) = promedioNotas notas
+                                              | otherwise = promedioDelMejorPromedio xs
+
