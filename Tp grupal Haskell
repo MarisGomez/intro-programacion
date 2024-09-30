@@ -1,1 +1,83 @@
+module Solucion where
 
+type Ciudad = String
+type Duracion = Float
+type Vuelo = (Ciudad, Ciudad, Duracion)
+
+type AgenciaDeViajes = [Vuelo]
+
+-- EJERCICIO 1
+vuelosValidos :: AgenciaDeViajes -> Bool
+vuelosValidos [] = True
+vuelosValidos ((ciudad1, ciudad2, duracion):xs) | not (vueloValido (ciudad1, ciudad2, duracion)) = False
+                                                | perteneceAOtroVuelo (ciudad1, ciudad2, duracion) xs = False
+                                                | otherwise = vuelosValidos xs
+
+-- auxiliar ej 1
+vueloValido :: Vuelo -> Bool 
+vueloValido (ciudad1, ciudad2, duracion) | ciudad1 /= ciudad2 && duracion > 0.0 = True
+                                         | otherwise = False
+
+perteneceAOtroVuelo :: (Eq t) => (t,t,Float) -> [(t,t,Float)] -> Bool
+perteneceAOtroVuelo _ [] = False
+perteneceAOtroVuelo (a,b,d) ((v1,v2,_):xs) | (a,b) == (v1,v2) = True
+                                           | otherwise = perteneceAOtroVuelo (a,b,d) xs
+
+-- EJERCICIO 2
+ciudadesConectadas :: AgenciaDeViajes -> Ciudad -> [Ciudad]
+ciudadesConectadas [] _ = []
+ciudadesConectadas ((c1,c2,d):xs) ciudad | ciudad == c1 = c2 : ciudadesConectadas xs ciudad
+                                           | ciudad == c2 = c1 : ciudadesConectadas xs ciudad
+                                           | otherwise = ciudadesConectadas xs ciudad
+
+-- EJERCICIO 3
+modernizarFlota :: AgenciaDeViajes -> AgenciaDeViajes
+modernizarFlota [] = []
+modernizarFlota ((c1,c2,duracion):xs) = (c1,c2, duracion*0.9) : modernizarFlota xs
+
+-- EJERCICIO 4
+ciudadMasConectada :: AgenciaDeViajes -> Ciudad
+ciudadMasConectada xs = masRepetido (listaCiudadesCompleta xs)
+
+-- auxiliar ej 4
+listaCiudadesCompleta :: AgenciaDeViajes -> [Ciudad]
+listaCiudadesCompleta [] = []
+listaCiudadesCompleta ((c1,c2,d):xs) = c1: c2: listaCiudadesCompleta xs
+
+cantidadDeApariciones :: String -> [String] -> Int
+cantidadDeApariciones _ [] = 0
+cantidadDeApariciones e (x:xs) | e == x = 1 + cantidadDeApariciones e xs
+                               | otherwise = 0 + cantidadDeApariciones e xs
+
+masRepetido :: [String] -> String 
+masRepetido [x] = x
+masRepetido (x:y:xs) | cantidadDeApariciones x xs > cantidadDeApariciones y xs = masRepetido (x:xs)
+                     | cantidadDeApariciones y xs > cantidadDeApariciones x xs = masRepetido (y:xs)
+                     | otherwise = masRepetido (x:xs)
+
+-- EJERCICIO 5
+sePuedeLlegar :: AgenciaDeViajes -> Ciudad -> Ciudad -> Bool
+sePuedeLlegar [] _ _ = False
+sePuedeLlegar vuelos origen destino | pertenece destino (ciudadesConectadas vuelos origen) = True
+                                    | otherwise = hayUnaCoincidencia (ciudadesConectadas vuelos origen) (ciudadesConectadas vuelos destino)
+                                    
+-- auxiliar ej 5
+hayUnaCoincidencia :: [String] -> [String] -> Bool
+hayUnaCoincidencia [] [] = False
+hayUnaCoincidencia (x:xs) ys | pertenece x ys = True
+                             | otherwise = hayUnaCoincidencia xs ys
+
+pertenece :: (Eq t) => t -> [t] -> Bool 
+pertenece _ [] = False
+pertenece e (x:xs) | e == x = True
+                   | otherwise = pertenece e xs
+
+-- EJERCICIO 6
+duracionDelCaminoMasRapido :: AgenciaDeViajes -> Ciudad -> Ciudad -> Duracion
+duracionDelCaminoMasRapido _ _ _ = 10.0 -- Borrar y escribir el código correcto
+
+-- EJERCICIO 7
+puedoVolverAOrigen :: AgenciaDeViajes -> Ciudad ->  Bool
+puedoVolverAOrigen vuelos origen = True -- Borrar y escribir el código correcto
+
+-- [("BsAs", "Rosario", 5.0), ("Rosario", "Cordoba", 5.0),("Cordoba", "BsAs", 8.0)]
