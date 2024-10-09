@@ -50,7 +50,7 @@ def despegar (n:int):
         print(i)
 print ("Despegue")
 
-
+despegar(10) #puede ser cualquier numero
 
 # para abrir una "terminal" en python:
 # en la carpeta del archivo ejecutar "python3" en la terminal, luego "impoort (nombre del archivo)"
