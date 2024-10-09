@@ -1,0 +1,57 @@
+import math
+# EJERCICIO 1.1
+def imprimir_hola_mundo ():
+    print("Hola Mundo")
+
+imprimir_hola_mundo()
+
+# EJERCICIO 1.5
+def perimetro ():
+    res : float = 2 * math.pi
+    return res
+
+print(perimetro())
+
+# EJERCICIO 2.5
+def es_multiplo_de (x: int, y:int) -> bool:
+    return x % y == 0
+
+# EJERCICIO 3.3
+def es_nombre_largo (nombre: str) -> bool:
+    return len(nombre) >= 3 and len(nombre) <= 8
+
+# casos test ej 3.3
+print(es_nombre_largo("Lu"))
+print(es_nombre_largo("Joni"))
+print(es_nombre_largo("Guadalupe"))
+
+# EJERCICIO 6.2
+def imprimir_pares ():
+    inicio: int = 10
+    fin: int = 40
+    paso: int = 1
+    while inicio <= fin:
+        if inicio % 2 == 0:
+            print (inicio)
+        inicio += paso
+
+imprimir_pares()
+
+def imprimir_pares_con_for():
+    for n in range (10,41,1):
+        if n % 2 == 0:
+            print(n)
+
+imprimir_pares_con_for()
+
+# EJERCICIO 6.4
+def despegar (n:int):
+    for i in range (n,0,-1):
+        print(i)
+print ("Despegue")
+
+
+
+# para abrir una "terminal" en python:
+# en la carpeta del archivo ejecutar "python3" en la terminal, luego "impoort (nombre del archivo)"
+# ctrl + D para salir
