@@ -44,6 +44,13 @@ def imprimir_pares_con_for():
 
 imprimir_pares_con_for()
 
+# EJERCICIO 6.3
+def eco ():
+    for n in range (0,10,1):
+        print("eco")
+
+eco()
+
 # EJERCICIO 6.4
 def despegar (n:int):
     for i in range (n,0,-1):
@@ -51,6 +58,9 @@ def despegar (n:int):
 print ("Despegue")
 
 despegar(10) #puede ser cualquier numero
+
+
+
 
 # para abrir una "terminal" en python:
 # en la carpeta del archivo ejecutar "python3" en la terminal, luego "impoort (nombre del archivo)"
