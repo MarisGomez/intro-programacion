@@ -43,7 +43,7 @@ def es_multiplo_de (x: int, y:int) -> bool:
 def es_par (numero:int) -> bool:
     return es_multiplo_de (numero,2)
 
-# EJERCICIO 2.7 HACERRRR
+# EJERCICIO 2.7
 def cantidad_de_pizzas(comensales:int, min_cant_de_porciones:int) -> int:
     return round((comensales * min_cant_de_porciones)/8)
     
