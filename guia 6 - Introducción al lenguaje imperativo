@@ -1,65 +1,91 @@
 import math
+
 # EJERCICIO 1.1
 def imprimir_hola_mundo ():
     print("Hola Mundo")
 
-imprimir_hola_mundo()
+# EJERCICIO 1.2
+def imprimir_un_verso ():
+    print("I give her all my love, \nThat's all i do.") #\n se utuliza para bajar una linea
+
+# EJERCICIO 1.3
+def raiz_de_2():
+    res: float = round (math.sqrt(2),4)
+    return res
 
 # EJERCICIO 1.5
 def perimetro ():
     res : float = 2 * math.pi
     return res
 
-print(perimetro())
+################################################################################################################################
+# EJERCICIO 2.1
+def imprimir_saludo (nombre:str) -> str:
+    print ("Hola " + str(nombre))
+
+# EJERCICIO 2.2
+def raiz_cuadrada_numero (numero:int) -> float:
+    return math.sqrt(numero)
+
+# EJERCICIO 2.3
+def fahrenheit_a_celsius (temp_far:float) -> float:
+    return ((temp_far - 32)*5)/9
+
+# EJERCICIO 2.4
+def imprimir_dos_veces (estribillo: str) -> str:
+    print (2 * estribillo)
 
 # EJERCICIO 2.5
 def es_multiplo_de (x: int, y:int) -> bool:
     return x % y == 0
 
+# EJERCICIO 2.6
+def es_par (numero:int) -> bool:
+    return es_multiplo_de (numero,2)
+
+# EJERCICIO 2.7 HACERRRR
+def cantidad_de_pizzas(comensales:int, min_cant_de_porciones:int) -> int:
+    return round((comensales * min_cant_de_porciones)/8)
+    
+################################################################################################################################
+# EJERCICIO 3.1
+def alguno_es_0(numero1:float, numero2:float) -> bool:
+    return numero1==0 or numero2==0 
+
+# EJERCICIO 3.2
+def ambos_son_0(numero1:float, numero2:float) -> bool:
+    return numero1==0 and numero2==0
+
 # EJERCICIO 3.3
 def es_nombre_largo (nombre: str) -> bool:
     return len(nombre) >= 3 and len(nombre) <= 8
 
-# casos test ej 3.3
-print(es_nombre_largo("Lu"))
-print(es_nombre_largo("Joni"))
-print(es_nombre_largo("Guadalupe"))
-
-# EJERCICIO 6.2
-def imprimir_pares ():
-    inicio: int = 10
-    fin: int = 40
-    paso: int = 1
-    while inicio <= fin:
-        if inicio % 2 == 0:
-            print (inicio)
-        inicio += paso
-
-imprimir_pares()
-
-def imprimir_pares_con_for():
-    for n in range (10,41,1):
-        if n % 2 == 0:
-            print(n)
-
-imprimir_pares_con_for()
-
-# EJERCICIO 6.3
-def eco ():
-    for n in range (0,10,1):
-        print("eco")
-
-eco()
-
-# EJERCICIO 6.4
-def despegar (n:int):
-    for i in range (n,0,-1):
-        print(i)
-print ("Despegue")
-
-despegar(10) #puede ser cualquier numero
+# EJERCICIO 3.4
+def es_bisiesto(año:int) -> bool:
+    return es_multiplo_de(año,400) or (es_multiplo_de(año,4) and not(es_multiplo_de(año,100)))
 
 
+if __name__ == '__main__':
+    # EJERCICIO 1
+    #imprimir_hola_mundo()
+    #imprimir_un_verso()
+    #print(raiz_de_2())
+    #print(perimetro())
+    # EJERCICIO 2
+    #imprimir_saludo ("Pepito")
+    #print(raiz_cuadrada_numero(10))
+    #print (fahrenheit_a_celsius(100))
+    #imprimir_dos_veces("Es lo malo de ser bueno en este mundo cruel \n")
+    #print(es_multiplo_de(4,2))
+    #print(es_par(10))
+    #print(cantidad_de_pizzas(5,3))
+    # EJERCICIO 3
+    #print(alguno_es_0(2,0))
+    #print(ambos_son_0(0,0))
+    #print(es_nombre_largo("Lu"))
+    #print(es_nombre_largo("Joni"))
+    #print(es_nombre_largo("Guadalupe"))
+    print(es_bisiesto(2024))
 
 
 # para abrir una "terminal" en python:
