@@ -130,6 +130,13 @@ def vacaciones_o_trabajar (sexo:str, edad:int) -> str:
 ################################################################################################################################
 # EJERCICIO 6.1 
 def imprimir_numeros () -> None:
+    inicio: int = 1
+    fin: int = 10
+    while inicio <= fin:
+        print (inicio)
+        inicio += 1
+
+def imprimir_numeros2 () -> None:
     for n in range (1,11,1):
         print (n)
 
@@ -137,24 +144,36 @@ def imprimir_numeros () -> None:
 def imprimir_pares () -> None:
     inicio: int = 10
     fin: int = 40
-    paso: int = 1
     while inicio <= fin:
         if inicio % 2 == 0:
             print (inicio)
-        inicio += paso
+        inicio += 1
 
-def imprimir_pares_con_for() -> None:
+def imprimir_pares2() -> None:
     for n in range (10,41,1):
         if n % 2 == 0:
             print(n)
 
 # EJERCICIO 6.3
 def eco () -> None:
+    inicio: int = 1
+    fin: int = 10
+    while inicio <= fin:
+        print ("eco")
+        inicio += 1
+
+def eco2 () -> None:
     for n in range (0,10,1):
         print("eco")
 
 # EJERCICIO 6.4
 def despegar (n:int) -> None:
+    while n >= 0:
+        print (n)
+        n -= 1
+    print ("Despegue!")
+
+def despegar2 (n:int) -> None:
     for i in range (n,0,-1):
         print(i)
     print ("Despegue")
@@ -165,14 +184,23 @@ def viaje_en_el_tiempo (año_partida:int, año_llegada:int) -> None:
         año_partida -= 1
         print("Viajó un año al pasado, estamos en el año:", año_partida)
 
+def viaje_en_el_tiempo2 (año_partida:int, año_llegada:int) -> None:
+    for n in range (año_partida,año_llegada,-1):
+        print("Viajó un año al pasado, estamos en el año:", n)
+
 # EJERCICIO 6.6
-def viaje_en_el_tiempo2(año_partida: int) -> None:
+def viaje_aristoteles (año_partida: int) -> None:
     while año_partida >= 384:
         año_partida -= 20
         if año_partida >= 384:
             print("Viajó 20 años al pasado, estamos en el año:", año_partida)
         else:
             print("¡Si viajo más atrás nos conoceremos a Atistóteles!")
+
+def viaje_aristoteles2 (año_partida: int) -> None:
+    for n in range (año_partida,-384,-20):
+        print("Viajó 20 años al pasado, estamos en el año:", n)
+    print("¡Si viajo más atrás nos conoceremos a Atistóteles!")
 
 if __name__ == '__main__':
     # EJERCICIO 1
@@ -206,11 +234,12 @@ if __name__ == '__main__':
     #vacaciones_o_trabajar("F",19)
     #imprimir_numeros()
     #imprimir_pares()
-    #imprimir_pares_con_for()
+    #imprimir_pares2()
     #eco()
     #despegar(10)
     #viaje_en_el_tiempo (2024,2020)
-    viaje_en_el_tiempo2 (2024)
+    #viaje_en_el_tiempo2 (2024,2020)
+    viaje_aristoteles2 (2024)
 
 
 # para abrir una "terminal" en python:
