@@ -64,6 +64,115 @@ def es_nombre_largo (nombre: str) -> bool:
 def es_bisiesto(año:int) -> bool:
     return es_multiplo_de(año,400) or (es_multiplo_de(año,4) and not(es_multiplo_de(año,100)))
 
+################################################################################################################################
+# EJERCICIO 4
+def peso_pino (altura_en_metros:float) -> float:
+    centimetros = altura_en_metros*100
+    if altura_en_metros <= 3:
+        return centimetros * 3
+    else:
+        return 900 + (centimetros-300) * 2
+
+def es_peso_util (peso: float) -> bool:
+    peso_min = 400
+    peso_max = 1000
+    return peso >= peso_min and peso <= peso_max
+
+def sirve_pino (altura_en_metros:float) -> bool:
+    return es_peso_util(peso_pino(altura_en_metros))
+
+################################################################################################################################
+# EJERCICIO 5.1
+def devolver_el_doble_si_es_par(numero:int) -> int:
+    if numero % 2 == 0:
+        return numero * 2
+    else:
+        return numero
+    
+# EJERCICIO 5.2
+def devolver_valor_si_es_par_sino_el_que_sigue(numero:int) -> int:
+    if numero % 2 == 0:
+        return numero
+    else:
+        return numero + 1
+
+# EJERCICIO 5.3
+def devolver_el_doble_si_es_multiplo3_el_triple_si_es_multiplo9(numero:int) -> int:
+    if numero % 9 == 0:
+        return numero * 3
+    elif numero % 3 == 0:
+        return numero * 2
+    else:
+        return numero
+
+# EJERCICIO 5.4
+def lindo_nombre(nombre:str) -> str:
+    if len(nombre) >= 5:
+        print("Tu nombre tiene muchas letras!")
+    else:
+        print("Tu nombre tiene menos de 5 caracteres")
+
+# EJERCICIO 5.5
+def elRango(numero:float) -> str:
+    if numero < 10:
+        print("Menor a 10")
+    elif numero >= 10 and numero <= 20:
+        print("Entre 10 y 20")
+    else:
+        print("Mayor a 20")
+
+def vacaciones_o_trabajar (sexo:str, edad:int) -> str:
+    if (sexo == "F" and edad >= 60) or (sexo == "M" and edad >= 65) or edad < 18:
+        print("Andá de vacaciones")
+    else:
+        print("Te toca trabajar")
+
+################################################################################################################################
+# EJERCICIO 6.1 
+def imprimir_numeros () -> None:
+    for n in range (1,11,1):
+        print (n)
+
+# EJERCICIO 6.2
+def imprimir_pares () -> None:
+    inicio: int = 10
+    fin: int = 40
+    paso: int = 1
+    while inicio <= fin:
+        if inicio % 2 == 0:
+            print (inicio)
+        inicio += paso
+
+def imprimir_pares_con_for() -> None:
+    for n in range (10,41,1):
+        if n % 2 == 0:
+            print(n)
+
+# EJERCICIO 6.3
+def eco () -> None:
+    for n in range (0,10,1):
+        print("eco")
+
+# EJERCICIO 6.4
+def despegar (n:int) -> None:
+    for i in range (n,0,-1):
+        print(i)
+    print ("Despegue")
+
+# EJERCICIO 6.5
+def viaje_en_el_tiempo (año_partida:int, año_llegada:int) -> None:
+    while año_partida > año_llegada:
+        año_partida -= 1
+        print("Viajó un año al pasado, estamos en el año:", año_partida)
+
+# EJERCICIO 6.6
+def viaje_en_el_tiempo2(año_partida: int) -> None:
+    while año_partida >= 384:
+        año_partida -= 20
+        if año_partida >= 384:
+            print("Viajó 20 años al pasado, estamos en el año:", año_partida)
+        else:
+            print("¡Si viajo más atrás nos conoceremos a Atistóteles!")
 
 if __name__ == '__main__':
     # EJERCICIO 1
@@ -85,7 +194,23 @@ if __name__ == '__main__':
     #print(es_nombre_largo("Lu"))
     #print(es_nombre_largo("Joni"))
     #print(es_nombre_largo("Guadalupe"))
-    print(es_bisiesto(2024))
+    #print(es_bisiesto(2024))
+    #print(peso_pino(5))
+    #print(es_peso_util(700))
+    #print(sirve_pino(2))
+    #print(devolver_el_doble_si_es_par(2))
+    #print(devolver_valor_si_es_par_sino_el_que_sigue(2))
+    #print(devolver_el_doble_si_es_multiplo3_el_triple_si_es_multiplo9(18))
+    #lindo_nombre("susana")
+    #elRango(9)
+    #vacaciones_o_trabajar("F",19)
+    #imprimir_numeros()
+    #imprimir_pares()
+    #imprimir_pares_con_for()
+    #eco()
+    #despegar(10)
+    #viaje_en_el_tiempo (2024,2020)
+    viaje_en_el_tiempo2 (2024)
 
 
 # para abrir una "terminal" en python:
