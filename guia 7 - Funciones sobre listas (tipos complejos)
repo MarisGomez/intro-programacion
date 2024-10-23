@@ -37,6 +37,14 @@ def suma_total (lista:list[int]) -> int:
         res += n
     return res 
 
+# EJERCICIO 1.4
+def maximo (lista:list[int]) -> int:
+    res:int = 0
+    for e in lista:
+        if e > res:
+            res = e
+    return res
+
 #########################################################################################################
 # EJERCICIO 2.1
 def ceros_en_posiciones_pares (lista:list[int]):
