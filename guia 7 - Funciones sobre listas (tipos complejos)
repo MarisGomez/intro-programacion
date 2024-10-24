@@ -45,6 +45,44 @@ def maximo (lista:list[int]) -> int:
             res = e
     return res
 
+# EJERCICIO 1.5
+def minimo (lista:list[int]) -> int:
+    res:int = lista[0]
+    for e in lista:
+        if e < res:
+            res = e
+    return res
+
+# EJERCICIO 1.6
+def ordenar (lista:list[int]) -> bool: #DEVUELVE LA LISTA ORDENADA PERO NO ES LO PEDIDO
+    lista_desordenada: list[int] = lista.copy()
+    lista_ordenada: list[int] = []
+    while lista_ordenada < lista_desordenada:
+        lista_ordenada.append(minimo(lista_desordenada))
+        lista_desordenada.remove(minimo(lista_desordenada)) # REMOVE NO ESTA ADMITIDO
+    return lista_ordenada
+
+def ordenados(Lista:list[int]) -> bool:
+    for i in range(len(Lista)-1):
+        if (not(Lista[i]<Lista[i+1])):
+            return False
+    return True
+
+def ordenados2(lista:list[int]) -> bool: # PREGUNTAR
+    for i in range(len(lista)-1):
+        if lista[i]<lista[i+1]:
+            return True
+    return False
+
+# EJERCICIO 1.7
+def pos_maximo(lista:list[int]) -> int:
+    max:int = maximo(lista)
+    for i in lista:
+        if lista == []:
+            return -1
+        else:
+            return lista[max]
+
 #########################################################################################################
 # EJERCICIO 2.1
 def ceros_en_posiciones_pares (lista:list[int]):
@@ -74,5 +112,10 @@ if __name__ == '__main__':
     #print(suma_total([1,2,3,4,5]))
     #print(suma_total([]))
     #print(ceros_en_posiciones_pares2([1,2,3,4,5,6]))
-    print(divide_a_todos([2,4,8],2))
+    #print(divide_a_todos([2,4,8],2))
+    #print(maximo([3,5,1,4]))
+    #print(minimo([99,34,5,72]))
+    #print(ordenados([1,3,5,1]))
+    #print(ordenados2([1,3,5,6]))
+    print(pos_maximo([2,5,3,77,4]))
 
