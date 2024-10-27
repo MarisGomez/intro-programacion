@@ -1,9 +1,9 @@
 # EJERCICIO 1.1
 def pertenece (lista:list[int], i:int) -> bool:
     for n in lista:
-        if n == i:
+        if i == n:
             return True
-        return False
+    return False
 
 def pertenece2 (lista:list[int], i:int) -> bool:
     n: int = 0
@@ -145,7 +145,7 @@ def vocales_distintas(palabra:str) -> bool:
     else:
         return False
 
-# EJERCICIO 1.13   
+# EJERCICIO 1.13
 
 #########################################################################################################
 # EJERCICIO 2.1
@@ -157,6 +157,7 @@ def ceros_en_posiciones_pares (lista:list[int]):
 #ceros_en_posiciones_pares(lista)
 #print(lista)
 
+# EJERCICIO 2.2
 def ceros_en_posiciones_pares2 (lista:list[int]) -> list[int]:
     res: list[int] = []
     i:int = 0
@@ -167,6 +168,44 @@ def ceros_en_posiciones_pares2 (lista:list[int]) -> list[int]:
             res.append(lista[i])
         i += 1
     return res
+
+# EJERCICIO 2.3
+def sin_vocales(palabra:str) -> str:
+    vocales:list[str] = ['a','e','i','o','u','A','E','I','O','U']
+    palabra_nueva:str = ""
+    for i in range(0,len(palabra)):
+        if not(pertenece(vocales, palabra[i])):
+            palabra_nueva += palabra[i] 
+    return palabra_nueva
+
+
+# EJERCICIO 2.4
+def reemplaza_vocales(palabra:str) -> str:
+    vocales:list[str] = ['a','e','i','o','u','A','E','I','O','U']
+    palabra_nueva:str = ""
+    for i in range(0,len(palabra)):
+        if not(pertenece(vocales, palabra[i])):
+            palabra_nueva += palabra[i]
+        else:
+            palabra_nueva += ' '
+    return palabra_nueva
+
+# EJERCICIO 2.5
+def da_vuelta_str(palabra:str) -> str:
+    palabra_nueva:str = ""
+    for i in range(0,len(palabra)):
+        palabra_nueva += palabra[len(palabra) - 1 - i]
+    return palabra_nueva
+
+# EJERCICIO 2.6
+def eliminar_repetidos(palabra:str) -> str:
+    palabra_nueva:str = ""
+    for i in range(0,len(palabra)):
+        if pertenece(palabra, palabra[i]) and not(pertenece(palabra_nueva,palabra[i])):
+            palabra_nueva += palabra[i]
+    return palabra_nueva
+
+#########################################################################################################
 
 
 if __name__ == '__main__':
@@ -187,5 +226,9 @@ if __name__ == '__main__':
     #print(palabra_larga(["termo","gato","tener","sociologia"]))
     #print(polindromo("a"))
     #print(polindromo("anana"))
-    print(consecutivos([4,1,3,1,1,4]))
-    print(vocales_distintas("ana"))
+    #print(consecutivos([4,1,3,1,1,4]))
+    #print(vocales_distintas("ana"))
+    #print(sin_vocales("anastasia"))
+    #print(reemplaza_vocales("anastasia"))
+    #print(da_vuelta_str("argentina"))
+    print(eliminar_repetidos("pepinillo"))
