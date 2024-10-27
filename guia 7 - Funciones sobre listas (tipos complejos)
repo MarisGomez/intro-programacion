@@ -148,7 +148,7 @@ def vocales_distintas(palabra:str) -> bool:
 # EJERCICIO 1.13
 
 #########################################################################################################
-# EJERCICIO 2.2.1
+# EJERCICIO 2.1
 def ceros_en_posiciones_pares (lista:list[int]):
     for n in range (0,len(lista),2):
         lista[n] = 0
@@ -157,7 +157,7 @@ def ceros_en_posiciones_pares (lista:list[int]):
 #ceros_en_posiciones_pares(lista)
 #print(lista)
 
-# EJERCICIO 2.2.2
+# EJERCICIO 2.2
 def ceros_en_posiciones_pares2 (lista:list[int]) -> list[int]:
     res: list[int] = []
     i:int = 0
@@ -169,7 +169,7 @@ def ceros_en_posiciones_pares2 (lista:list[int]) -> list[int]:
         i += 1
     return res
 
-# EJERCICIO 2.2.3
+# EJERCICIO 2.3
 def sin_vocales(palabra:str) -> str:
     vocales:list[str] = ['a','e','i','o','u','A','E','I','O','U']
     palabra_nueva:str = ""
@@ -179,7 +179,7 @@ def sin_vocales(palabra:str) -> str:
     return palabra_nueva
 
 
-# EJERCICIO 2.2.4
+# EJERCICIO 2.4
 def reemplaza_vocales(palabra:str) -> str:
     vocales:list[str] = ['a','e','i','o','u','A','E','I','O','U']
     palabra_nueva:str = ""
@@ -190,14 +190,14 @@ def reemplaza_vocales(palabra:str) -> str:
             palabra_nueva += ' '
     return palabra_nueva
 
-# EJERCICIO 2.2.5
+# EJERCICIO 2.5
 def da_vuelta_str(palabra:str) -> str:
     palabra_nueva:str = ""
     for i in range(0,len(palabra)):
         palabra_nueva += palabra[len(palabra) - 1 - i]
     return palabra_nueva
 
-# EJERCICIO 2.2.6
+# EJERCICIO 2.6
 def eliminar_repetidos(palabra:str) -> str:
     palabra_nueva:str = ""
     for i in range(0,len(palabra)):
@@ -205,7 +205,7 @@ def eliminar_repetidos(palabra:str) -> str:
             palabra_nueva += palabra[i]
     return palabra_nueva
 
-# EJERCICIO 2.3
+# EJERCICIO 3
 def resultado_materia(notas:list[int]) -> int:
     contador_notas:int = 0
     for nota in notas:
@@ -221,7 +221,7 @@ def resultado_materia(notas:list[int]) -> int:
     else:
         return 2
 
-# EJERCICIO 2.4
+# EJERCICIO 4
 def saldo_bancario(movimientos:list[tuple[str,int]]) -> int:
     saldo:int = 0
     for movimiento in movimientos:
@@ -231,6 +231,29 @@ def saldo_bancario(movimientos:list[tuple[str,int]]) -> int:
             saldo -= movimiento[1]
     return saldo
 
+#########################################################################################################
+# EJERCICIO 5
+def pertenece_a_cada_uno_version_1(s: list[int], e: int, res: list[bool]) -> None:
+    res.clear()
+    for i in range(len(s)):
+        res.append(pertenece(s[i], e))
+    return res
+
+print(pertenece_a_cada_uno_version_1([[4,5,6], [7,8,10], [4,4,4]], 4, [True, False, True])) #PREGUNTAR
+
+def pertenece_a_cada_uno_version_3(s: list[int], e: int) -> list[bool]:
+    res:list[bool] = []
+    for i in range(len(s)):
+        res.append(pertenece(s[i], e))
+    return res
+
+print(pertenece_a_cada_uno_version_3([[4,5,6], [7,8,10], [4,4,4]], 4))
+
+# EJERCICIO 6
+def es_matriz(matriz:list[int]) -> bool:
+    filas:int = 0
+    columnas:int = 0
+    
 
 
 if __name__ == '__main__':
