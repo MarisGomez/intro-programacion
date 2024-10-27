@@ -39,7 +39,7 @@ def suma_total (lista:list[int]) -> int:
 
 # EJERCICIO 1.4
 def maximo (lista:list[int]) -> int:
-    res:int = 0
+    res:int = lista[0]
     for e in lista:
         if e > res:
             res = e
@@ -76,12 +76,76 @@ def ordenados2(lista:list[int]) -> bool: # PREGUNTAR
 
 # EJERCICIO 1.7
 def pos_maximo(lista:list[int]) -> int:
-    max:int = maximo(lista)
-    for i in lista:
-        if lista == []:
-            return -1
+    if lista == []:
+        return -1
+    else:
+        for i in range (len(lista)):
+            if lista[i] == maximo(lista):
+                return i
+        
+# EJERCICIO 1.8
+def pos_minimo(lista:list[int]) -> int:
+    if lista == []:
+        return -1
+    else:
+        for i in range (len(lista)):
+            if lista[i] == minimo(lista):
+                return i
+
+# EJERCICIO 1.9
+def palabra_larga(palabras:list[str]) -> bool:
+    for i in range (len(palabras)):
+        if len(palabras[i]) > 7:
+            return True
+    return False
+
+# EJERCICIO 1.10
+def polindromo(palabra:str) -> bool:
+    if len(palabra) == 0 or len(palabra) == 1:
+        return True
+    else:
+        indice:int = 0
+        while indice < len(palabra):
+            if palabra[indice] != palabra[len(palabra) - 1 - indice]:
+                return False
+            indice += 1
+        return True
+
+# EJERCICIO 1.11
+def consecutivos(numero:list[int]) -> bool:
+    indice:int = 0
+    indice2:int = 1
+    contador_consecutivos:int = 0
+    while indice2 < len(numero):
+        if numero[indice] == numero[indice2]:
+            contador_consecutivos += 1
+            if contador_consecutivos == 2:
+                return True
+            indice += 1
+            indice2 += 1
         else:
-            return lista[max]
+            contador_consecutivos = 0
+            indice += 1
+            indice2 += 1
+    return False
+
+# EJERCICIO 1.12
+def pertenece_str (lista:list[str], i:str) -> bool:
+    return i in lista
+
+def vocales_distintas(palabra:str) -> bool:
+    vocales:list[str] = ['a','e','i','o','u']
+    vocales_palabra:list[str] = []
+    for i in range(0,len(palabra)):
+        if pertenece_str(vocales, palabra[i]) and not(pertenece_str(vocales_palabra, palabra[i])):
+            vocales_palabra.append(palabra[i])
+        
+    if len(vocales_palabra) == 3:
+        return True
+    else:
+        return False
+
+# EJERCICIO 1.13   
 
 #########################################################################################################
 # EJERCICIO 2.1
@@ -117,5 +181,11 @@ if __name__ == '__main__':
     #print(minimo([99,34,5,72]))
     #print(ordenados([1,3,5,1]))
     #print(ordenados2([1,3,5,6]))
-    print(pos_maximo([2,5,3,77,4]))
-
+    #print(maximo([-3,-2,-1]))
+    #print(pos_maximo([-3,-2,-1]))
+    #print(pos_minimo([1,4,5,-6]))
+    #print(palabra_larga(["termo","gato","tener","sociologia"]))
+    #print(polindromo("a"))
+    #print(polindromo("anana"))
+    print(consecutivos([4,1,3,1,1,4]))
+    print(vocales_distintas("ana"))
