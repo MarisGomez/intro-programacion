@@ -1,0 +1,98 @@
+import random
+from queue import LifoQueue as Pila # Queue as Cola
+from queue import Queue as Cola
+c = Cola
+p = Pila
+#p.put(1) #APILAR
+#elemento = p.get() #DESAPILAR
+#p.empty() #VACIA? devuelvve un bool
+#p.queue() #TRANSFORMA LA PILA EN UNA LISTA, no permitido
+
+def generar_nros_al_azar(cantidad:int, desde:int, hasta:int) -> Pila[int]:
+    res:Pila = Pila()
+    for i in range(cantidad):
+        rand = random.randint(desde,hasta)
+        res.put(rand)
+    return res
+
+def print_pila(p:Pila) -> None:
+    contenedor: Pila = Pila()
+    n:int
+    while not p.empty():
+        n = p.get()
+        print(n)
+        contenedor.put(n)
+    while not contenedor.empty():
+        p.put(contenedor.get())
+
+def generar_lista(p:Pila) -> None:
+    contenedor:list[int] = []
+    n:int
+    while not p.empty():
+        n = p.get()
+        contenedor.append(n)
+
+
+print_pila(generar_nros_al_azar(5,1,100))
+print(generar_nros_al_azar(5,1,100).queue) #TESTEAR PILAS
+
+def buscar_el_maximo(p:Pila[int]) -> int:
+    contenedor:Pila[int] = Pila()
+    maximo:int = p.get()
+    contenedor.put(maximo)
+
+    while not p.empty():
+        elementoActual = p.get()
+        if maximo < elementoActual:
+            maximo = elementoActual
+        contenedor.put(elementoActual)
+    while not contenedor.empty():
+        p.put(contenedor.get())
+    
+    return maximo
+
+pila = Pila()
+pila.put(25)
+pila.put(3)
+pila.put(9)
+pila.put(77)
+pila.put(1)
+print(buscar_el_maximo(pila))
+
+def armar_secuencia_de_bingo() -> Cola[int]:
+    res:Cola[int] = Cola()
+    bolillero:list[int] = []
+    for i in range (0,100):
+        bolillero.append(i)
+
+    random.shuffle(bolillero)
+    
+    i = 0
+    while i < len(bolillero):
+        res.put(bolillero[i])
+        i += 1
+    
+    return res
+
+print(armar_secuencia_de_bingo().queue)
+
+def jugar_carton_de_bingo(carton:list[int], bollillero:Cola[int]) -> int:
+    bingo:int = 0
+    jugadas:int = 0
+    contenedor:Cola[int] = Cola()
+
+    while bingo < len(carton):
+        jugadas += 1
+        bolita_actual = bollillero.get()
+        contenedor.put(bolita_actual)
+        if bolita_actual in carton:
+            bingo += 1
+    while not bollillero.empty():
+        contenedor.put(bollillero.get())
+
+    while not contenedor.empty():
+        bollillero.put(contenedor.get())
+
+    return jugadas
+
+# DICCIONARIOS
