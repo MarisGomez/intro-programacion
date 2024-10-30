@@ -68,12 +68,6 @@ def ordenados(Lista:list[int]) -> bool:
             return False
     return True
 
-def ordenados2(lista:list[int]) -> bool: # PREGUNTAR
-    for i in range(len(lista)-1):
-        if lista[i]<lista[i+1]:
-            return True
-    return False
-
 # EJERCICIO 1.7
 def pos_maximo(lista:list[int]) -> int:
     if lista == []:
@@ -237,9 +231,8 @@ def pertenece_a_cada_uno_version_1(s: list[int], e: int, res: list[bool]) -> Non
     res.clear()
     for i in range(len(s)):
         res.append(pertenece(s[i], e))
-    return res
 
-print(pertenece_a_cada_uno_version_1([[4,5,6], [7,8,10], [4,4,4]], 4, [True, False, True])) #PREGUNTAR
+#print(pertenece_a_cada_uno_version_1([[4,5,6], [7,8,10], [4,4,4]], 4, [True, False, True])) #PREGUNTAR
 
 def pertenece_a_cada_uno_version_3(s: list[int], e: int) -> list[bool]:
     res:list[bool] = []
@@ -247,13 +240,68 @@ def pertenece_a_cada_uno_version_3(s: list[int], e: int) -> list[bool]:
         res.append(pertenece(s[i], e))
     return res
 
-print(pertenece_a_cada_uno_version_3([[4,5,6], [7,8,10], [4,4,4]], 4))
 
-# EJERCICIO 6
-def es_matriz(matriz:list[int]) -> bool:
-    filas:int = 0
-    columnas:int = 0
-    
+# EJERCICIO 6.1
+def es_matriz(matriz:list[list[int]]) -> bool:
+    if len(matriz) == 0 or len(matriz[0]) == 0:
+        return False
+    else:
+        indice:int = 0
+        while indice < len(matriz):
+            if len(matriz[0]) != len(matriz[indice]):
+                return False
+            else:
+                indice += 1
+        return True
+
+# EJERCICIO 6.2
+def filas_ordenadas(matriz:list[list[int]], res:list[bool]) -> None:
+    res.clear()
+    indice = 0
+    while indice < len(matriz):
+        res.append(ordenados(matriz[indice]))
+        indice += 1
+
+#matriz = [[1,2,3],[4,5,6],[7,8,9],[1,2,3]]
+#res = [False,False,False]
+#filas_ordenadas(matriz, res)
+#print(matriz, res)
+
+# EJERCICIO 6.3
+def columna(matriz:list[list[int]], c:int) -> list[int]:
+    res:list[int] = []
+    for fila in matriz:
+        res.append(fila[c])
+    return res
+
+
+matriz = [[1,2,3],
+          [4,5,6],
+          [12,8,9]]
+print(columna(matriz, 0)) # [1,4,12]
+print(columna(matriz, 2)) # [3,6,9]
+
+# EJERCICIO 6.4
+def columnas_ordenadas(matriz:list[list[int]]) -> list[bool]:
+    res:list[bool] = []
+    indice = 0
+    while indice < len(matriz):
+        res.append(ordenados(columna(matriz,indice)))
+        indice += 1
+    return res
+
+# EJERCICIO 6.5
+def transponer(matriz:list[list[int]]) -> list[list[int]]:
+    res:list[list[int]] = []
+    indice:int = 0
+    while indice < len(matriz):
+        res.append(columna(matriz,indice))
+        indice += 1
+    return res
+
+# EJERCICIO TATETI
+def quien_gana_tateti(matriz:list[list[str]]) -> int:
+
 
 
 if __name__ == '__main__':
@@ -281,5 +329,9 @@ if __name__ == '__main__':
     #print(da_vuelta_str("argentina"))
     #print(eliminar_repetidos("pepinillo"))
     #print(sumatoria([4,4,1]))
-    print(resultado_materia([4,5,8,1]))
-    print(saldo_bancario([("I",2000), ("R", 20),("R", 1000),("I", 300)]))
+    #print(resultado_materia([4,5,8,1]))
+    #print(saldo_bancario([("I",2000), ("R", 20),("R", 1000),("I", 300)]))
+    #print(pertenece_a_cada_uno_version_3([[4,5,6], [7,8,10], [4,4,4]], 4))
+    print(es_matriz([[]]))
+    print(columnas_ordenadas([[1,2,7],[4,5,6],[12,8,9]]))
+    print(transponer([[1,2,7],[4,5,6],[12,8,9]]))
