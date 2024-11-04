@@ -300,8 +300,6 @@ def transponer(matriz:list[list[int]]) -> list[list[int]]:
     return res
 
 # EJERCICIO TATETI
-def quien_gana_tateti(matriz:list[list[str]]) -> int:
-
 
 
 if __name__ == '__main__':
