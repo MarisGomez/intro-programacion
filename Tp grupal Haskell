@@ -35,13 +35,13 @@ ciudadesConectadas :: AgenciaDeViajes -> Ciudad -> [Ciudad]
 ciudadesConectadas [] _ = []
 ciudadesConectadas vuelos ciudad = eliminarRepetidos (perteneceCiudadEspecifica ciudad vuelos) 
 
-ciudadEspecificaRepetida :: Ciudad -> Vuelo -> [Ciudad]
+ciudadEspecificaRepetida :: Ciudad -> Vuelo -> [Ciudad] -- devuelve la ciudad conectada en un vuelo especifico
 ciudadEspecificaRepetida ciudadEspecifica (origen,destino,_) 
     | origen == ciudadEspecifica = [destino]
     | destino == ciudadEspecifica = [origen]
     | otherwise =  []
 
-perteneceCiudadEspecifica :: Ciudad -> AgenciaDeViajes -> [Ciudad]
+perteneceCiudadEspecifica :: Ciudad -> AgenciaDeViajes -> [Ciudad] -- devuelve la lista de ciudades conectadas pero pueden haber repeticiones
 perteneceCiudadEspecifica _ [] = []
 perteneceCiudadEspecifica ciudadEspecifica (vuelo:xs) = ciudadEspecificaRepetida ciudadEspecifica vuelo ++ perteneceCiudadEspecifica ciudadEspecifica xs
 
@@ -73,17 +73,17 @@ modernizarFlota ((origen,destino,duracion):vs) = (origen,destino,(duracion / 100
 ciudadMasConectada :: AgenciaDeViajes -> Ciudad
 ciudadMasConectada vuelos = masConectada vuelos (creadorLista vuelos)
 
-creadorLista :: AgenciaDeViajes -> [Int]
+creadorLista :: AgenciaDeViajes -> [Int] -- crea una lista con la cantidad de conecciones que tiene cada ciudad
 creadorLista [] = []
 creadorLista ((origen, destino, duracion):vs) = [length (ciudadesConectadas ((origen, destino, duracion):vs) origen)] ++ [(length(ciudadesConectadas ((origen, destino, duracion):vs) destino))] ++ creadorLista vs
 
-masConexiones :: [Int] -> Int
+masConexiones :: [Int] -> Int -- a partid de la lista devuelta por "creadorLista" encuentra el maximo
 masConexiones [c] = c
 masConexiones (c1:c2:cs) 
     | c1 >= c2 = masConexiones (c1:cs)
     | otherwise = masConexiones (c2:cs)
 
-masConectada:: AgenciaDeViajes -> [Int] -> Ciudad
+masConectada:: AgenciaDeViajes -> [Int] -> Ciudad -- relaciona la cantidad maxima de conecciones con su ciudad correspondiente
 masConectada ((c1,c2,_):vs) (n1:n2:ns)
     | (masConexiones (n1:n2:ns) == n1) = c1
     | (masConexiones (n1:n2:ns) == n2) = c2
@@ -96,12 +96,12 @@ sePuedeLlegar vuelos origen destino
     | recursionListaDestinos vuelos (listaDestinos vuelos origen) destino == True = True
     | otherwise = False
 
-recursionListaDestinos :: AgenciaDeViajes -> [Ciudad] -> Ciudad -> Bool
+recursionListaDestinos :: AgenciaDeViajes -> [Ciudad] -> Ciudad -> Bool -- para saber si hay una posible escala
 recursionListaDestinos _ [] _ = False
 recursionListaDestinos vuelos (c1:cs) destino | pertenece destino (listaDestinos vuelos c1) == True = True
                                               | otherwise = recursionListaDestinos vuelos cs destino
 
-listaDestinos :: AgenciaDeViajes -> Ciudad -> [Ciudad]
+listaDestinos :: AgenciaDeViajes -> Ciudad -> [Ciudad] -- devuelve la lista de destinos a los que puede llegar una ciudad especifica
 listaDestinos [] _ = []
 listaDestinos ((d1, d2, duracion):vs) ciudadEspecifica | d1 == ciudadEspecifica = [d2] ++ listaDestinos vs ciudadEspecifica
                                                        | otherwise = [] ++ listaDestinos vs ciudadEspecifica
@@ -110,24 +110,24 @@ listaDestinos ((d1, d2, duracion):vs) ciudadEspecifica | d1 == ciudadEspecifica 
 duracionDelCaminoMasRapido :: AgenciaDeViajes -> Ciudad -> Ciudad -> Duracion
 duracionDelCaminoMasRapido vuelos origen destino = duracionMasCorta (listaDuraciones vuelos origen destino)
 
-duracionMasCorta :: [Duracion] -> Duracion
+duracionMasCorta :: [Duracion] -> Duracion -- minimo
 duracionMasCorta [d] = d
 duracionMasCorta (d1:d2:ds) 
     | d1 <= d2 = duracionMasCorta (d1:ds)
     | otherwise = duracionMasCorta (d2:ds)
 
-listaDuraciones :: AgenciaDeViajes -> Ciudad -> Ciudad -> [Duracion]
+listaDuraciones :: AgenciaDeViajes -> Ciudad -> Ciudad -> [Duracion] -- devuelve la lista de duraciones tanto de un vuelo directo como de una posible escala dado un origen y un destino
 listaDuraciones vuelos origen destino 
     | pertenece destino (listaDestinos vuelos origen) == True = [duracionVuelo vuelos origen destino] ++ recursionListaDuraciones vuelos (listaDestinos vuelos origen) origen destino
     | otherwise = recursionListaDuraciones vuelos (listaDestinos vuelos origen) origen destino
 
-recursionListaDuraciones :: AgenciaDeViajes -> [Ciudad] -> Ciudad -> Ciudad -> [Duracion]
+recursionListaDuraciones :: AgenciaDeViajes -> [Ciudad] -> Ciudad -> Ciudad -> [Duracion] -- devuelve la lista de duraciones de las escalas dado un origen y un destino
 recursionListaDuraciones _ [] _ _ = []
 recursionListaDuraciones vuelos (c1:cs) origen destino 
     | pertenece destino (listaDestinos vuelos c1) == True = [(duracionVuelo vuelos origen c1) + (duracionVuelo vuelos c1 destino)] ++ recursionListaDuraciones vuelos cs origen destino
     | otherwise = recursionListaDuraciones vuelos cs origen destino
 
-duracionVuelo :: AgenciaDeViajes -> Ciudad -> Ciudad -> Duracion
+duracionVuelo :: AgenciaDeViajes -> Ciudad -> Ciudad -> Duracion -- devuelve la duracion de un vuelo directo dado un origen y un destino
 duracionVuelo ((d1, d2, duracion):vs) origen destino 
     | d1 == origen && d2 == destino = duracion
     | otherwise = duracionVuelo vs origen destino
