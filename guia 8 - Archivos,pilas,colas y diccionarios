@@ -264,6 +264,7 @@ def jugar_carton_de_bingo(carton:list[int], bollillero:Cola[int]) -> int:
 
     return jugadas
 
+<<<<<<< HEAD
 # EJERCICIO 14
 def n_pacientes_urgentes(c:Cola[tuple[int, str, str]]) -> int:
     contenedor:Cola[tuple[int,str,str]] = Cola()
@@ -292,6 +293,33 @@ def atencion_a_clientes(c:Cola[tuple[str, int, bool, bool]]) -> Cola[tuple[str, 
     
 
 # DICCIONARIOS - EJERCICIO 16
+=======
+# EJERCICIO 21.1
+def contar_lineas(nombre_archivo:str) -> int:
+    contador:int = 0
+    archivo = open(nombre_archivo, 'r') #read
+    for linea in archivo.readlines(): #devuelve una lista con cada salto de linea
+        contador += 1
+    archivo.close()
+    return contador
+
+print(contar_lineas('hola.txt'))
+
+# EJERCICIO 22
+def clonar_sin_comentarios(nombre_archivo_entrada:str, nombre_archivo_salida:str) -> None:
+    archivo_entrada = open(nombre_archivo_entrada, 'r') 
+    archivo_salida = open(nombre_archivo_salida, 'w') #escritura
+    for linea in archivo_entrada.readlines():
+        if linea.strip()[0] != '#': #STRIP NO ESTA ADMITIDO
+            archivo_salida.write(linea)
+    archivo_entrada.close
+    archivo_salida.close
+
+#def eliminar_espacios() #HACER
+
+clonar_sin_comentarios('hola.txt','chau.txt')
+
+# EJERCICIO 16
 def agrupar_por_longitud(nombre_archivo:str) -> dict[int,int]:
     archivo = open(nombre_archivo, 'r')
     diccionario: dict[int,int] = dict() #otra forma de crear un diccionario vacio : {}
@@ -331,6 +359,7 @@ def la_palabra_mas_frecuente(nombre_archivo:str) -> str:
     return max_palabra
 
 print(la_palabra_mas_frecuente('ejemplo.txt'))
+<<<<<<< HEAD
 
 # ARCHIVOS - EJERCICIO 21.1
 def contar_lineas(nombre_archivo:str) -> int:
