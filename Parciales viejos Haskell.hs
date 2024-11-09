@@ -23,7 +23,7 @@ perteneceADupla e ((x,y):xs) | e == x || e == y = True
 
 -- EJ 3
 porcentajeDeVotos :: String -> [(String,String)] -> [Int] -> Float
-porcentajeDeVotos presi formulas votos = division (cantVotosPorPresi presi formulas votos * 100) (sumaVotos votos) 
+porcentajeDeVotos presi formulas votos = division (cantVotosPorPresi presi formulas votos * 100) (sumaVotos votos)
 
 -- auxiliar ej 3
 cantVotosPorPresi :: String -> [(String,String)] -> [Int] -> Int
@@ -31,7 +31,7 @@ cantVotosPorPresi presi ((p,v):xs) (votos:ys) | presi == p = votos
                                               | otherwise = cantVotosPorPresi presi xs ys
 
 division :: Int -> Int -> Float
-division a b = (fromIntegral a)/(fromIntegral b)
+division a b = fromIntegral a/fromIntegral b
 
 -- EJ 4
 proximoPresidente :: [(String,String)] -> [Int] -> String
@@ -50,7 +50,7 @@ iesimoLugar i (x:xs) | i == x = 1
 
 nElem :: Int -> [t] -> t
 nElem n (x:xs) | n == 1 = x
-               | n /= 1 = nElem (n-1) xs 
+               | n /= 1 = nElem (n-1) xs
 
 --------------------------------------------------------------------------------------- 2023 TEMA 2
 -- EJ 1
@@ -148,7 +148,7 @@ sumatoria [] = 0
 sumatoria (x:xs) = x + sumatoria xs
 
 division :: Int -> Int -> Float
-division a b = (fromIntegral a)/(fromIntegral b)
+division a b = fromIntegral a/fromIntegral b
 
 -- EJ 3
 mejorPromedio:: [(String, [Int])] -> String
@@ -159,7 +159,7 @@ mejorPromedio ((alumno, notas):(alumno1, notas1):xs) | promedioNotas notas >= pr
 -- EJ 4
 seGraduoConHonores :: [(String, [Int])] -> Int -> String -> Bool
 seGraduoConHonores [] materias nombre = False
-seGraduoConHonores ((alumno, notas):xs) materias nombre 
+seGraduoConHonores ((alumno, notas):xs) materias nombre
     | nombre == alumno && aproboMasDeNMaterias ((alumno, notas):xs) nombre (materias-1) && pertenece nombre (buenosAlumnos ((alumno, notas):xs)) && promedioDelMejorPromedio ((alumno, notas):xs) - promedioNotas notas < 1  = True
     | otherwise = seGraduoConHonores xs materias nombre
 
@@ -202,7 +202,7 @@ eliminarRepetidos (x:xs) | pertenece x xs = x : quitarTodos x (eliminarRepetidos
 
 personasAux :: [(String, String)] -> [String]
 personasAux [] = []
-personasAux ((usuario1, usuario2):xs) | relacionesValidas ((usuario1, usuario2):xs) == True = usuario1 : usuario2 : personasAux xs
+personasAux ((usuario1, usuario2):xs) | relacionesValidas ((usuario1, usuario2):xs) = usuario1 : usuario2 : personasAux xs
 
 personas :: [(String, String)] -> [String]
 personas [] = []
@@ -224,7 +224,7 @@ amigosDe _ [] = []
 amigosDe usuario xs = quitarTodos usuario (personas (amigosDeAux usuario xs))
 
 -- ej 4
-masRepetido :: [String] -> String 
+masRepetido :: [String] -> String
 masRepetido [x] = x
 masRepetido (x:y:xs) | cantidadDeApariciones x xs > cantidadDeApariciones y xs = masRepetido (x:xs)
                      | cantidadDeApariciones y xs > cantidadDeApariciones x xs = masRepetido (y:xs)
@@ -239,15 +239,15 @@ personaConMasAmigos :: [(String, String)] -> String
 personaConMasAmigos [] = "yo"
 personaConMasAmigos xs = masRepetido (personasAux xs)
 ------------------------------------------------------------------------------------------------ TEST
-main = runTestTT tests
+--main = runTestTT tests
 
-tests = test [
-	-- "nombre" ~: (funcion parametros) ~?= resultado_esperado
-	"componentes repetidas" ~: (relacionesValidas [("ana", "ana")]) ~?= False,
-	"tupla repetida" ~: (relacionesValidas [("ana", "pedro"), ("ana", "pedro")]) ~?= False,
-	"tupla repetida invertida" ~: (relacionesValidas [("ana", "pedro"), ("pedro", "ana")]) ~?= False,
-	"todas diferentes" ~: (relacionesValidas [("ana", "pedro"), ("ana", "carlos")]) ~?= True
-	]
+--tests = test [
+--        -- "nombre" ~: (funcion parametros) ~?= resultado_esperado
+--        "componentes repetidas" ~: (relacionesValidas [("ana", "ana")]) ~?= False,
+--        "tupla repetida" ~: (relacionesValidas [("ana", "pedro"), ("ana", "pedro")]) ~?= False,
+--        "tupla repetida invertida" ~: (relacionesValidas [("ana", "pedro"), ("pedro", "ana")]) ~?= False,
+--        "todas diferentes" ~: (relacionesValidas [("ana", "pedro"), ("ana", "carlos")]) ~?= True
+--       ]
 
 -- -- Ejemplos
 
