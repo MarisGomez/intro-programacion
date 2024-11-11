@@ -1,3 +1,6 @@
+from queue import LifoQueue as Pila
+from queue import Queue as Cola
+
 # DICCIONARIOS - EJERCICIO 16
 def agrupar_por_longitud(nombre_archivo:str) -> dict[int,int]:
     archivo = open(nombre_archivo, 'r')
