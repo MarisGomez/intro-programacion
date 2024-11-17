@@ -1,3 +1,4 @@
+import math
 from queue import LifoQueue as Pila
 from queue import Queue as Cola
 
@@ -19,7 +20,19 @@ with open("ejemplo.txt") as archivo:
         return diccionario
 
 print(agrupar_por_longitud('ejemplo.txt'))
+"""
+# EJERCICIO 17
+def calcular_promedio_por_estudiante(notas:list[tuple[str, float]]) -> dict[str, float]:
+    diccionario: dict[str, float] = {}
+    for nota in notas:
+        promedio_estudiante:float = 0
+        if nota[0] not in diccionario:
+            diccionario = {nota[0],nota[1]}
+            promedio_estudiante += nota[1]
+        else:
+        
 
+"""
 # EJRCICIO 18
 with open("ejemplo.txt") as archivo:
     def la_palabra_mas_frecuente(nombre_archivo:str) -> str:
@@ -45,10 +58,63 @@ with open("ejemplo.txt") as archivo:
 
 print(la_palabra_mas_frecuente('ejemplo.txt'))
 """
-#EJERCICIO 17
-def calcular_promedio_por_estudiante(notas:list[tuple[str, float]]) -> dict[str, float]:
-    
+#EJERCICIO 19
+#historiales: historial de navegacion para cada usuario. Las claves del diccionario seran los nombres de usuario y los valores seran pilas.
+def visitar_sitio(historiales: dict[str, Pila[str]], usuario: str, sitio: str) -> None:
+    if usuario in historiales.keys():
+        historiales[usuario].put(sitio)
+    else:
+        historiales[usuario] = Pila()
+        historiales[usuario].put(sitio)
 
+
+def navegar_atras(historiales: dict[str, Pila[str]], usuario: str) -> None:
+    ultimo_sitio = historiales[usuario].get()
+    sitio_anterior = historiales[usuario].get()
+    historiales[usuario].put(ultimo_sitio)
+    historiales[usuario].put(sitio_anterior)
+
+historiales = {}
+visitar_sitio(historiales, "Usuario1", "google.com")
+visitar_sitio(historiales, "Usuario1", "facebook.com")
+print(historiales['Usuario1'].queue)
+navegar_atras(historiales, "Usuario1")
+print(historiales['Usuario1'].queue)
+visitar_sitio(historiales, "Usuario2", "youtube.com")
+print(historiales['Usuario2'].queue)
+
+# EJERCICIO 20
+def agregar_producto(inventario:dict[str, dict[str, float | int]], nombre:str, precio:float, cantidad:int) -> None:
+    if nombre not in inventario.keys():
+        inventario_aux = {
+            "precio": precio,
+            "cantidad": cantidad,
+    }
+        inventario[nombre] = inventario_aux
+
+def actualizar_stock(inventario:dict[str, dict[str, float | int]], nombre:str, cantidad:int) -> None:
+    if nombre in inventario.keys():
+        inventario[nombre]['cantidad'] = cantidad
+
+def actualizar_precios(inventario:dict[str, dict[str, float | int]], nombre:str, precio:float) -> None:
+    if nombre in inventario.keys():
+        inventario[nombre]['precio'] = precio
+
+def calcular_valor_inventario(inventario:dict[str, dict[str, float | int]]) -> float:
+    precio:float = 0
+    for nombre in inventario.values():
+        precio += nombre['precio'] * nombre['cantidad']
+    return precio
+
+inventario = {}
+agregar_producto(inventario, "Camisa", 20.0, 50)
+agregar_producto(inventario, "Pantalon", 30.0, 30)
+print(inventario)
+actualizar_stock(inventario, "Camisa", 10)
+actualizar_precios(inventario, "Pantalon", 30.9)
+print(inventario)
+valor_total = calcular_valor_inventario(inventario)
+print("Valor total del inventario:", valor_total) # Deberıa imprimir 2100.0
 """
 # ARCHIVOS - EJERCICIO 21.1
 with open("hola.txt") as archivo:
