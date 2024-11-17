@@ -22,14 +22,28 @@ with open("ejemplo.txt") as archivo:
 print(agrupar_por_longitud('ejemplo.txt'))
 """
 # EJERCICIO 17
-def calcular_promedio_por_estudiante(notas:list[tuple[str, float]]) -> dict[str, float]:
-    diccionario: dict[str, float] = {}
+def calcular_promedio_por_estudiante(notas: list[tuple[str, float]]) -> dict[str, float]:
+    res: dict[str, float] = {}
     for nota in notas:
-        promedio_estudiante:float = 0
-        if nota[0] not in diccionario.keys():
-            diccionario += {nota[0],nota[1]}
-            promedio_estudiante += nota[1]
-        #else:
+        prom: float = calcular_promedio(nota[0], notas)
+        res[nota[0]] = prom #agrego al diccionario nombreEstudiante : promedio de sus notas
+        
+    return res
+
+def calcular_promedio(estudiante: str, notas: list[tuple[str, float]]) -> float:
+    cant_notas: int = 0
+    suma_notas: int = 0
+   
+    for nota in notas:
+        if nota[0] == estudiante:
+            cant_notas += 1
+            suma_notas += nota[1]
+
+    return suma_notas/cant_notas
+
+
+notas = [["P1", 3], ["P2", 5],["P1", 6], ["P3", 10],["P3", 10], ["P1", 6]]
+print(calcular_promedio_por_estudiante(notas))
 
 
 """
@@ -115,6 +129,7 @@ actualizar_precios(inventario, "Pantalon", 30.9)
 print(inventario)
 valor_total = calcular_valor_inventario(inventario)
 print("Valor total del inventario:", valor_total) # Deberıa imprimir 2100.0
+
 """
 # ARCHIVOS - EJERCICIO 21.1
 with open("hola.txt") as archivo:
