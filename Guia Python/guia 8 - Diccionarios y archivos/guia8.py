@@ -26,11 +26,11 @@ def calcular_promedio_por_estudiante(notas:list[tuple[str, float]]) -> dict[str,
     diccionario: dict[str, float] = {}
     for nota in notas:
         promedio_estudiante:float = 0
-        if nota[0] not in diccionario:
-            diccionario = {nota[0],nota[1]}
+        if nota[0] not in diccionario.keys():
+            diccionario += {nota[0],nota[1]}
             promedio_estudiante += nota[1]
-        else:
-        
+        #else:
+
 
 """
 # EJRCICIO 18

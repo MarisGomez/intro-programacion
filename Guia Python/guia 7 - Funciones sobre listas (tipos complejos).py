@@ -140,6 +140,43 @@ def vocales_distintas(palabra:str) -> bool:
         return False
 
 # EJERCICIO 1.13
+def sec_ordenada(s: list[int]) -> int:
+    cantidad: int = 0
+    indice: int
+    cantidad_mayor: int = 0
+    indice_mayor: int
+    for i in range(len(s)):
+        if i + 1 < len(s) and s[i] + 1 == s[i + 1]:
+            if cantidad == 0:
+                indice = i
+            cantidad += 1
+            if cantidad > cantidad_mayor:
+                cantidad_mayor = cantidad
+                indice_mayor = indice
+        else:
+            cantidad = 0
+    return indice_mayor
+
+print(sec_ordenada([1,2,3,0,1,2,3,4,0,1,2,3]))
+print(sec_ordenada([0,1,2,0,10,11,12,13]))
+print(sec_ordenada([0,1,2,3,0,1,2,3,0,1,2,3]))
+
+# EJERCICIO 14
+def cant_digitos_impares(s: list[int]) -> int:
+    contador_impares: int = 0
+    for numero in s:
+        numero = str(numero) # cambio la variable del numero de int a str
+        indice = 0
+        while indice < len(numero):
+            digito = int(numero[indice]) # para poder operar con el numero lo vuelvo int
+            if digito % 2 != 0:
+                contador_impares += 1
+            indice += 1
+    return contador_impares
+
+print(cant_digitos_impares([57, 2383, 812, 246]))
+print(cant_digitos_impares([22,46,88,26]))
+print(cant_digitos_impares([22,46,88,26,77,54]))
 
 #########################################################################################################
 # EJERCICIO 2.1
