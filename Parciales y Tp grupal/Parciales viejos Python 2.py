@@ -1,4 +1,3 @@
-######################################################################################################
 # 1) Acomodar [2 puntos]
 
 # No está permitido utilizar las funciones sort() y reverse().
@@ -149,4 +148,3 @@ def cuenta_posiciones_por_nacion(naciones: list[str], torneos: dict[int, list[st
 naciones = ["arg", "aus", "nz", "sud"]
 torneos = {2023:["nz", "sud", "arg", "aus"], 2022:["nz", "sud", "aus", "arg"]}
 print(cuenta_posiciones_por_nacion(naciones, torneos))
-
