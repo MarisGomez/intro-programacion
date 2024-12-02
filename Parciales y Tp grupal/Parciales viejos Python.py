@@ -186,10 +186,10 @@ def ind_nesima_aparicion(s: list[int], n: int, elem: int) -> int:
 
     if cantidad_apariciones(s,elem) >= n:
         while contador < n:
-                if s[indice] == elem:
-                     contador = contador + 1
-                indice = indice + 1
-                res = res + 1
+            if s[indice] == elem:
+                contador += 1
+            indice += 1
+            res += 1
     return res
 
 print(ind_nesima_aparicion([-1, 1, 1, 5, -7, 1, 3],2,1))
@@ -531,12 +531,12 @@ print(promedio_de_salidas(registros))
 #  asegura: {res es la posición de la sala en tiempos_salas de la que más rápido se salió (en caso que haya más de una, devolver la primera, osea la de menor índice)}
 #}
 
-def tiempo_mas_rapido (tiempos_salas: list[int])-> int:
+def tiempo_mas_rapido(tiempos_salas: list[int])-> int:
     res:int = 0
     tiempoMasRapido:int = 61
     i:int = 0
     while i < len(tiempos_salas):
-        if tiempos_salas[i] < tiempoMasRapido and tiempos_salas[i] > 0 and tiempos_salas[i] < 61:
+        if 0 < tiempos_salas[i] < tiempoMasRapido:
             tiempoMasRapido = tiempos_salas[i]
             res = i
             i += 1
