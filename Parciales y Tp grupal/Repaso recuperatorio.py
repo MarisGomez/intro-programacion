@@ -285,6 +285,11 @@ def palabras_por_vocales(texto: str) -> dict[int, int]:
     res: dict[int, int] = {}
     palabras = separar_texto_por_palabra(texto)
     for palabra in palabras:
-        if cantidad_vocales_por_palabra(palabra) not in res:
-            res[cantidad_vocales_por_palabra(palabra)] = 1
-        
+        clave = cantidad_vocales_por_palabra(palabra)
+        if clave in res:
+            res[clave] += 1
+        else:
+            res[clave] = 1
+    return res
+
+print(palabras_por_vocales("hola como estas hoy"))
