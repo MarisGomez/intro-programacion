@@ -177,11 +177,114 @@ def maximo(s:list[int]) -> int:
             mayor = n
     return mayor
 
-def stock_productos(stock_cambios: list[(str, int)]) -> dict[str,(int, int)]:
-    stock_por_producto: dict[str, list[int]]
-    for i in range(0,len(stock_cambios)):
-        elem = stock_cambios[i]
-        if elem[0] not in stock_por_producto.keys():
-            stock_por_producto[elem[0]] = elem[1]
+#def stock_productos(stock_cambios: list[(str, int)]) -> dict[str,(int, int)]:
+
+###################################################################################################### PARCIAL DESAPROB
+# Ejercicio 1
+def maximo(s: list[int]) -> int:
+    maximo: int = s[0]
+    for n in s:
+        if n > maximo:
+            maximo = n
+    return maximo
+
+def sumatoria_hasta(s: list[int], n: int) -> int:
+    sumatoria: int = 0
+    for e in s:
+        if not(e == n):
+            sumatoria += e
         else:
-            
+            break
+    return sumatoria
+
+def subsecuencia_mas_larga(v: list[int]) -> tuple[int,int]:
+    cantidad: int = 1
+    lista_aux: list[int] = []
+    res: tuple[int, int] = []
+    for i in range(len(v)-1):
+        if v[i] == (v[i + 1] - 1) or v[i] == (v[i + 1] + 1):
+            cantidad += 1
+        else:
+            lista_aux.append(cantidad)
+            cantidad = 1
+    for n in lista_aux:
+        if n == maximo(lista_aux):
+            res = [n, sumatoria_hasta(lista_aux,n)]
+    return res
+
+print(subsecuencia_mas_larga([-10, 2,1,2,1, 1,2,1,2]))
+
+# Ejercicio 2
+def mejor_resultado_por_examen(examen: list[bool]) -> int:
+    contador_true: int = 0
+    contador_false: int = 0
+    for punto in examen:
+        if punto == True:
+            contador_true += 1
+        else:
+            contador_false += 1
+    res: int = 0
+    if contador_true == contador_false:
+        res = len(examen)
+    elif contador_true < contador_false:
+        res = int(len(examen)/2) + contador_true
+    else:
+        res = int(len(examen)/2) + contador_false
+    return res
+
+def mejor_resultado_de_ana(examenes: Cola[list[bool]]) -> list[int]:
+    res: list[int] = []
+    contenedor: Cola = Cola()
+    while not examenes.empty():
+        examenActual = examenes.get()
+        res.append(mejor_resultado_por_examen(examenActual))
+        contenedor.put(examenActual)
+    while not contenedor.empty():
+        examenes.put(contenedor.get())
+    return res
+
+# Ejercicio 3
+def cambiar_matriz(A: list[list[int]]) -> None:
+    maximo_elemento: int = len(A) * len(A[0])
+    for i in range(len(A)):
+        for j in range(len(A[i])):
+            A[i][j] = (A[i][j] % maximo_elemento) + 1
+
+matriz = [[3,4,1],[2,5,0],[7,6,9]]
+cambiar_matriz(matriz)
+print(matriz)
+
+# Ejercicio 4
+def pertenece(s:list, n) -> bool:
+    for i in s:
+        if i == n:
+            return True
+    return False
+
+def cantidad_vocales_por_palabra(palabra: str) -> int:
+    vocales: list[str] = ['a','e','i','o','u','A','E','I','O','U']
+    contador: int = 0
+    for letra in palabra:
+        if pertenece(vocales,letra):
+            contador += 1
+    return contador
+
+def separar_texto_por_palabra(texto: str) -> list[str]:
+    texto_aux: str = texto + ' '
+    palabra: str = ''
+    texto_separado: list[str] = []
+    for letra in texto_aux:
+        if letra != ' ':
+            palabra += letra
+        else:
+            texto_separado.append(palabra)
+            palabra = ''
+    return texto_separado
+
+def palabras_por_vocales(texto: str) -> dict[int, int]:
+    res: dict[int, int] = {}
+    palabras = separar_texto_por_palabra(texto)
+    for palabra in palabras:
+        if cantidad_vocales_por_palabra(palabra) not in res:
+            res[cantidad_vocales_por_palabra(palabra)] = 1
+        
