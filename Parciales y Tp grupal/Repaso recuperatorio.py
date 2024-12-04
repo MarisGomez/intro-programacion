@@ -437,13 +437,17 @@ def separar_texto_por_palabra(texto: str) -> list[str]:
     texto_aux: str = texto + ' '
     palabra: str = ''
     texto_separado: list[str] = []
+    res: list[str]= []
     for letra in texto_aux:
         if letra != ' ':
             palabra += letra
         else:
             texto_separado.append(palabra)
             palabra = ''
-    return texto_separado
+    for palabra in texto_separado:
+        if not (palabra == ''):
+            res.append(palabra)
+    return res
 
 def palabras_por_vocales(texto: str) -> dict[int, int]:
     res: dict[int, int] = {}
