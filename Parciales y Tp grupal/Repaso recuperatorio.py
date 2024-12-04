@@ -163,21 +163,185 @@ print(filtrar_codigos_primos([101, 38435028, 4742019, 95472986]))
 # asegura: {El valor en res de un producto es una tupla de cantidades. Su primer elemento es la menor 
 # cantidad de ese producto en stock_cambios y como segundo valor el mayor}
 # }
+def stock_productos(stock_cambios: list[(str, int)]) -> dict[str,(int, int)]:
+    diccionario: dict[str, (int, int)] = {}
+    for producto in stock_cambios:
+        clave = producto[0]
+        if clave not in diccionario.keys():
+            minimo = producto[1]
+            maximo = producto[1]
+        else:
+            if producto[1] < minimo:
+                minimo = producto[1]
+            elif producto[1] > maximo:
+                maximo = producto[1]
+        diccionario[clave] = (minimo, maximo)
+    return diccionario
+
+sc1 = [("galletita", 12),("galletita", 10),("galletita", 1),("hueso",120),("hueso",3),("hueso",10)] #{"galletita":(1,12), "hueso":(3,120)}
+print(stock_productos(sc1))
+
+######################################################################################################
+#1) Gestión de notas de estudiantes [2 puntos]
+
+#En una escuela llamada "Academia Futura", se desea desarrollar un programa para gestionar las notas de los 
+#estudiantes por materia. El programa debe procesar una lista de tuplas donde cada tupla contiene el nombre de un estudiante, el nombre de una materia 
+#y la nota final obtenida por el estudiante en esa materia.
+
+#Se pide implementar una función en python, que respete la siguiente especificación:
+
+#problema gestion_notas (in notas_estudiante_materia: seq⟨(String x String x Z)) : dict⟨String, seq⟨(String x Z)⟩⟩ {
+#  requiere: { Las primeras componentes de notas_estudiante_materia tienen longitud mayor estricto a cero}
+#  requiere: { Las segundas componentes de notas_estudiante_materia tienen longitud mayor estricto a cero}
+#  requiere: { Las terceras componentes de notas_estudiante_materia están entre 1 y 10, ambos inclusive }
+#  requiere: { No hay 2 tuplas en notas_estudiante_materia que tengan la primera y segunda componente iguales (mismo estudiante y misma materia) }
+#  asegura: {res tiene como claves solo los primeros elementos de las tuplas de notas_estudiante_materia (o sea, un estudiante)}
+#  asegura: {El valor en res de un estudiante es una lista de tuplas donde cada tupla contiene como primera componente el nombre de la materia y como 
+#            segunda componente la nota obtenida por el estudiante en esa materia según notas_estudiante_materia}
+#  asegura: { Para toda clave (estudiante) en res, en su valor (lista de tuplas) no hay 2 tuplas que tengan la misma primera componente (materia) }
+#}
+
+def gestion_notas(notas_estudiante_materia: list[tuple[str, str, int]]) -> dict[str, list[tuple[str,int]]]:
+    diccionario: dict[str, list[tuple[str,int]]] = {}
+    for nota in notas_estudiante_materia:
+        clave = nota[0]
+        if clave not in diccionario.keys():
+            diccionario[clave] = [(nota[1], nota[2])]
+        else:
+            diccionario[clave].append((nota[1], nota[2]))
+    return diccionario
+
+n1 = [('Juan', 'Geografía', 5),('Ana', 'Matemática', 9),('Lucas', 'Lengua y Literatura', 6),('Ana', 'Lengua y Literatura', 4),('Juan', 'Matemática', 5)]
+print(gestion_notas(n1))
+
+#2) Cantidad dígitos pares [2 puntos]
+#Se pide implementar una función en Python llamada cantidad_digitos_pares que respete la siguiente especificación:
+
+#problema cantidad_digitos_pares (in numeros: seq⟨Z⟩) : Z {
+#  requiere:{Todos los elementos de numeros son mayores iguales a 0}
+#  asegura: {res es la cantidad total de digitos pares que aparecen en cada uno de los elementos de numeros}
+#}
+#Por ejemplo, si la lista de números es [5434, 42, 811, 3139], entonces el resultado esperado sería 5 (los dígitos pares son 4, 4, 4, 2, y 8).
+
+def cantidad_digitos_pares(numeros:list[int]) -> int:
+    res: int = 0
+    for n in numeros:
+        numero = str(n)
+        for i in range(0,len(numero)):
+            num = int(numero[i])
+            if num % 2 == 0:
+                res += 1
+    return res
+
+print(cantidad_digitos_pares([5434, 42, 811, 3139]))
+print(cantidad_digitos_pares([111, 351, 997]))
+
+#3) Priorizar cola de paquetes [2 puntos]
+#En una empresa de logística, se manejan paquetes que llegan a una bodega y deben ser procesados para su posterior distribución. Cada paquete está 
+#representado por una tupla (id_paquete, peso), donde id_paquete es un identificador único del paquete y peso representa el peso del paquete en kilogramos.
+
+#Se pide implementar una función en Python llamada reordenar_cola_primero_pesados que respete la siguiente especificación:
+
+#problema reordenar_cola_primero_pesados(in paquetes: Cola⟨(String x Z)⟩, in umbral:Z): Cola⟨(String x Z)⟩{
+#  requiere: {no hay repetidos en las primeras componentes (Ids) de paquetes}
+#  requiere: {todos las segundas componentes (pesos) de paquetes son mayores estricto a cero}
+#  requiere: {umbral es mayor o igual a cero}
+#  asegura: {los elementos de res son exactamente los mismos que los elementos de paquetes}
+#  asegura: {|res| = |paquetes|}
+#  asegura: {no hay un elemento en res, cuyo peso sea menor o igual que el umbral, que aparezca primero que otro elemento en res cuyo peso sea mayor que 
+#            el umbral)}
+#  asegura: {Para todo paquete p1 y paquete p2 cuyos pesos son menores o iguales que el umbral y pertenecen a paquetes si p1 aparece primero que p2 en 
+#            paquetes entonces p1 aparece primero que p2 en res}
+#  asegura: {Para todo paquete p1 y paquete p2 cuyos pesos son mayores que el umbral y pertenecen a paquetes si p1 aparece primero que p2 en paquetes entonces 
+#            p1 aparece primero que p2 en res}
+#}
+
+def reordenar_cola_primero_pesados(paquetes: Cola[tuple[str,int]], umbral:int) -> Cola[tuple[str,int]]:
+    res: Cola = Cola()
+    debajo_umbral: Cola = Cola()
+    contenedor: Cola = Cola()
+    while not paquetes.empty():
+        paquete = paquetes.get()
+        contenedor.put(paquete)
+        if paquete[1] > umbral:
+            res.put(paquete)
+        else:
+            debajo_umbral.put(paquete)
+    while not debajo_umbral.empty():
+        paquete_chico = debajo_umbral.get()
+        res.put(paquete_chico)
+    while not contenedor.empty():
+        paquetes.put(contenedor.get())
+    return res
+
+c1: Cola[tuple[str,int]] = Cola()
+c1.put(('A', 40))
+c1.put(('B', 10))
+c1.put(('C', 39))
+c1.put(('D', 41))
+print(reordenar_cola_primero_pesados(c1,39).queue) #([('A', 40), ('D', 41), ('B', 10), ('C', 39)])
+
+#4) Matriz pseudo ordenada [2 puntos]
+#Se desea verificar si una matriz está pseudo ordenada por columnas. Esto es que el mínimo de cada columna sea menor estricto que el mínimo de la columna siguiente
+
+#Para ello se pide desarrollar una función en Python que implemente esta idea respetando la siguiente especificación:
+
+#matriz_pseudo_ordenada (in matriz: seq⟨seq⟨Z⟩⟩): Bool {
+#  requiere: {|matriz| > 0}
+#  requiere: {|matriz[0]| > 0}
+#  requiere: {todos los elementos de matriz tienen la misma longitud}
+#  asegura: {res es igual a True <=> para todo 0<=i<|matriz[0]|-1, el mínimo de la columna i de matriz < el mínimo de la columna i + 1 de matriz }
+#}
+
 def minimo(s: list[int]) -> int:
     menor: int = s[0]
-    for n in s:
-        if n < menor:
-            menor = n
+    for i in s:
+        if i < menor:
+            menor = i
     return menor
 
-def maximo(s:list[int]) -> int:
-    mayor: int = s[0]
-    for n in s:
-        if n > mayor:
-            mayor = n
-    return mayor
+def crear_columnas(matriz: list[list[int]]) -> list[list[int]]:
+    res: list[list[int]] = []
+    indice: int = 0
+    while indice < len(matriz[0]):
+        columna = []
+        for i in range(0,len(matriz)):
+            elem = matriz[i][indice]
+            columna.append(elem)
+        indice += 1
+        res.append(columna)
+    return res
 
-#def stock_productos(stock_cambios: list[(str, int)]) -> dict[str,(int, int)]:
+def matriz_pseudo_ordenada(matriz: list[list[int]]) -> bool:
+    lista_minimos: list[int] = []
+    columnas = crear_columnas(matriz)
+    for c in columnas:
+        lista_minimos.append(minimo(c))
+    
+    res: bool = True
+    for i in range(0,len(lista_minimos)-1):
+        if not (lista_minimos[i] < lista_minimos[i+1]):
+            res = False
+    return res
+
+m1 = [[1, 3, 5, 5],
+      [2, 1, 6, 7],
+      [0, 2, 4, 8]]
+print(matriz_pseudo_ordenada(m1))
+m2 = [[0, 3, 5],
+      [2, 2, 6],
+      [0, 4, 4],
+      [3, 5, 2]]
+print(matriz_pseudo_ordenada(m2))
+m4 = [[5, 6, 8, 10]]
+print(matriz_pseudo_ordenada(m4))
+m5 = [[1],
+      [2],
+      [6],
+      [3]]
+print(matriz_pseudo_ordenada(m5))
+m6 = [[1]]
+print(matriz_pseudo_ordenada(m6))
 
 ###################################################################################################### PARCIAL DESAPROB
 # Ejercicio 1
@@ -293,3 +457,4 @@ def palabras_por_vocales(texto: str) -> dict[int, int]:
     return res
 
 print(palabras_por_vocales("hola como estas hoy"))
+
