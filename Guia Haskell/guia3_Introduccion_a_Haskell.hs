@@ -38,16 +38,16 @@ maximo3 x y z   | x >= y && x >= z = x
                 | y >= x && y >= z = y
                 | otherwise = z
 
-algunoEso :: Float -> Float -> Bool
-algunoEso x y | x == 0 || y == 0 = True
-                | otherwise = False
+algunoEs0 :: Float -> Float -> Bool
+algunoEs0 x y | x == 0 || y == 0 = True
+              | otherwise = False
 
 algunoEsoPM :: Float -> Float -> Bool
 algunoEsoPM x y = x == 0 || y == 0
 
 ambosSon0 :: Float -> Float -> Bool
 ambosSon0 x y | x == 0 && y == 0 = True
-                | otherwise = False
+              | otherwise = False
 
 ambosSon0PM :: Float -> Float -> Bool
 ambosSon0PM x y = x == 0 && y == 0
@@ -63,7 +63,7 @@ sumaDistintos x y z | x /= y && x /= z && y /= z = x + y + z
 
 esMultiploDe :: Int -> Int -> Bool
 esMultiploDe x y | mod x y == 0 = True
-                    | otherwise = False
+                 | otherwise = False
 
 digitoUnidades :: Integer -> Integer
 digitoUnidades n = mod (abs n) 10
