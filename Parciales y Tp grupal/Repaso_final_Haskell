@@ -1,5 +1,6 @@
 stockPorProducto :: [String] -> String -> Integer
 stockPorProducto [] _ = 0
 stockPorProducto (x:xs) p | x == p = 1 + stockPorProducto xs p
+                          | otherwise = stockPorProducto xs p
 
-generarStock :: [String] -> [(String, Int)]
+generarStock :: [String] ->[(String, Int)]
