@@ -27,7 +27,7 @@ k n = g ( f n )
 ---------- ej 2 -----------
 
 absoluto1 :: Integer -> Integer
-absoluto1 x = abs x 
+absoluto1 x = abs x
 
 maximoAbsoluto :: Integer -> Integer -> Integer
 maximoAbsoluto x y  | abs x > abs y = abs x
@@ -85,7 +85,7 @@ estanRelacionados  a b | mod a b == 0 = True
 ---------- ej 4 -----------
 
 prodInt :: (Float, Float) -> (Float, Float) -> Float
-prodInt (a, b) (c, d) = a * c + b * d 
+prodInt (a, b) (c, d) = a * c + b * d
 
 todoMenor :: (Float, Float) -> (Float, Float) -> Bool
 todoMenor x y   | (fst x) < (fst y) && (snd x) < (snd y) = True
@@ -152,7 +152,7 @@ todosMenores (x, y, z)  = f x > g x && f y > g y && f z > g z
     f :: Integer -> Integer
     f n | n <= 7 = n^2
         | otherwise = 2*n - 1
-    
+
     g :: Integer -> Integer
     g n | mod n 2 == 0 = div n 2
         | otherwise = 3*n + 1
@@ -168,7 +168,7 @@ asegura: {res = false ↔ anio no es multiplo de 4, o anio es multiplo de 100 pe
 type Anio = Integer
 type EsBisiesto = Bool
 
-bisiesto :: Anio -> EsBisiesto 
+bisiesto :: Anio -> EsBisiesto
 bisiesto a = mod a 4 == 0
 
 ---------- ej 7 -----------
@@ -196,16 +196,16 @@ asegura: {res = (|x| mod 10) + (⌊(|x|/10)⌋ mod 10)}
 -}
 
 comparar :: Int -> Int -> Int
-comparar  a b   | sumaUltimosDosDigitos(a) < sumaUltimosDosDigitos(b) = 1
-                | sumaUltimosDosDigitos(a) > sumaUltimosDosDigitos(b) = -1
+comparar  a b   | sumaUltimosDosDigitos a < sumaUltimosDosDigitos b = 1
+                | sumaUltimosDosDigitos a > sumaUltimosDosDigitos b = -1
                 | otherwise = 0
-        where 
+        where
         sumaUltimosDosDigitos :: Int -> Int
-        sumaUltimosDosDigitos x = unidad(x) + decena(x)
+        sumaUltimosDosDigitos x = unidad x + decena x
 
         unidad :: Int -> Int
         unidad x = mod x 10
-        
+
         decena :: Int -> Int
         decena x = unidad (div x 10)
 

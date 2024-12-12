@@ -6,7 +6,7 @@ longitud l | l == [] = 0
 
 longitudPM :: [t] -> Integer
 longitudPM [] = 0
-longitudPM (_:xs) = 1 + longitud xs
+longitudPM (_:xs) = 1 + longitudPM xs
 
 -- 1.2
 {-
