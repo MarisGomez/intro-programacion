@@ -7,6 +7,8 @@ asegura: {Para cada producto que pertenece a productos existe un i tal que 0 ≤
 res[i]1 es igual a la cantidad de veces que aparece producto en productos}
 }
 -}
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use map" #-}
 
 stockPorProducto :: [String] -> String -> Int
 stockPorProducto [] _ = 0
@@ -110,6 +112,16 @@ maximo (x:y:xs) | maximoFila x > maximoFila y = maximo (x:xs)
                 | otherwise = maximo (y:xs)
 
 -- Ejercicio 6
+{-
+problema masRepetido (t: Tablero) : Z {
+requiere: {El tablero t es un tablero bien formado, es decir, la longitud de todas las filas es la misma, y tienen al
+menos un elemento}
+requiere: {Existe al menos una columna en el tablero t }
+requiere: {El tablero t no es vac´ıo, todos los n´umeros del tablero son positivos, mayor estricto a 0}
+asegura: {res es igual al n´umero que m´as veces aparece en un tablero t. Si hay empate devuelve cualquiera de ellos}
+}
+-}
+
 reunirTodos :: [[Int]] -> [Int]
 reunirTodos [x] = x
 reunirTodos (x:y:xs) = x ++ y ++ reunirTodos xs
@@ -132,4 +144,44 @@ masRepetido :: [[Int]] -> Int
 masRepetido xs = maxCantAparicionesxElem (cantidadAparicionesxElem (reunirTodos xs))
 
 -- Ejercicio 7
---valoresDeCamino :: [[Int]] -> [(Int, Int)] -> [Int]
+{-
+problema valoresDeCamino (t: Tablero, c: Camino) : seq⟨Z⟩ {
+requiere: {El tablero t es un tablero bien formado, es decir, la longitud de todas las filas es la misma, y tienen al
+menos un elemento}
+requiere: {Existe al menos una columna en el tablero t }
+requiere: {El tablero t no es vac´ıo, todos los n´umeros del tablero son positivos, mayor estricto a 0}
+requiere: {El camino c es un camino v´alido, es decir, secuencia de posiciones adyacentes en la que solo es posible
+desplazarse hacia la posici´on de la derecha o hacia abajo y todas las posiciones est´an dentro de los limites del tablero
+t}
+asegura: {res es igual a la secuencia de n´umeros que est´an en el camino c, ordenados de la misma forma que aparecen
+las posiciones correspondientes en el camino.}
+}
+-}
+
+iesimoElem :: [Int] -> Int -> Int
+iesimoElem [] _ = 0
+iesimoElem (x:xs) i | i == 1 = x
+                    | otherwise = iesimoElem xs (i-1)
+
+iesimaFila :: [[Int]] -> Int -> [Int]
+iesimaFila [] _ = []
+iesimaFila (x:xs) i | i == 1 = x
+                    | otherwise = iesimaFila xs (i-1)
+
+posicionPuntual :: [[Int]] -> (Int, Int) -> Int
+posicionPuntual xs (fila, columna) = iesimoElem (iesimaFila xs fila) columna
+
+valoresDeCamino :: [[Int]] -> [(Int, Int)] -> [Int]
+valoresDeCamino xs [] = []
+valoresDeCamino xs (y:ys) = posicionPuntual xs y : valoresDeCamino xs ys
+
+-- Ejercicio 8
+{-
+problema esCaminoFibo (s:seq⟨Z⟩, i : Z) : Bool {
+requiere: {La secuencia de n´umeros s es no vac´ıa y est´a compuesta por n´umeros positivos (mayor estricto que 0)
+que representan los valores de un camino en un tablero}
+requiere: {i ≥ 0}
+asegura: {res = true ⇔ los valores de s son la sucesi´on de Fibonacci inicializada con el n´umero pasado como
+par´ametro i}
+}
+-}
